@@ -4,7 +4,7 @@ class AlgorithmStep {
   final bool doesMove;
 
   List<int> doStep(final List<int> oldList) {
-    final newList = List.from(oldList) as List<int>;
+    final newList = List<int>.from(oldList);
     if (doesMove) {
       final cache = newList[from];
       newList[from] = newList[to];
@@ -14,7 +14,7 @@ class AlgorithmStep {
   }
 
   List<int> undoStep(final List<int> oldList) {
-    final newList = List.from(oldList) as List<int>;
+    final newList = List<int>.from(oldList);
     if (doesMove) {
       final cache = newList[to];
       newList[to] = newList[from];

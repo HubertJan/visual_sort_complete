@@ -39,6 +39,9 @@ dependencies:
   provider: ^6.0.1
   http: ^0.13.4
   sync_http: ^0.3.0
+  resizable_widget: ^1.0.5
+  tabbed_view: ^1.11.0
+
 
 dev_dependencies:
   flutter_test:

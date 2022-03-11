@@ -38,6 +38,19 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             textTheme: Typography().white,
             primarySwatch: Colors.blue,
+            colorScheme: const ColorScheme(
+              primary: Colors.blue,
+              secondary: Color.fromRGBO(255, 255, 0, 1),
+              background: Color.fromRGBO(31, 33, 36, 1),
+              surface: Color.fromRGBO(239, 239, 239, 1),
+              error: Color.fromRGBO(220, 9, 9, 1),
+              onPrimary: Colors.white,
+              onSecondary: Colors.black,
+              onBackground: Colors.black,
+              onError: Colors.white,
+              onSurface: Colors.black,
+              brightness: Brightness.light,
+            ),
           ),
           home: SortScreen(),
         );
