@@ -1,13 +1,7 @@
-import 'dart:ffi';
-import 'package:ffi/ffi.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pysort_flutter/providers/algorithm_setup_state.dart';
-import 'package:pysort_flutter/providers/data_set_provider.dart';
+import 'package:pysort_flutter/providers/sort_config_state.dart';
 import 'package:pysort_flutter/screens/sort_screen.dart';
-
-import 'package:dartpy/dartpy.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,14 +15,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AlgorithmsSetupState>(
+        ChangeNotifierProvider<SortConfig>(
           create: (ctx) {
-            return AlgorithmsSetupState();
-          },
-        ),
-        ChangeNotifierProvider<DataSetState>(
-          create: (ctx) {
-            return DataSetState();
+            return SortConfig();
           },
         ),
       ],

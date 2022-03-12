@@ -1,12 +1,14 @@
 import 'dart:core';
 
 import 'package:pysort_flutter/model/algorithm_step.dart';
-import 'package:pysort_flutter/providers/algorithm_setup_state.dart';
 
 class SortResult {
 /*   final RuntimeResult runtimeResult;
   final List<int> inputList; */
   late final List<AlgorithmStep> steps;
+  late final String algorithmName;
+  late final List<int> inputData;
+  late final Duration runtime;
 
   SortResult({required this.steps});
 
@@ -18,6 +20,7 @@ class SortResult {
           doesMove: step["doesMove"], from: step["from"], to: step["to"]));
     }
     this.steps = steps;
+    runtime = Duration(milliseconds: jsonData["runtime"]);
   }
 }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pysort_flutter/providers/algorithm_state.dart';
+import 'package:pysort_flutter/providers/sort_graph_state.dart';
 
 class SortVisualisation extends StatefulWidget {
   const SortVisualisation({Key? key}) : super(key: key);
@@ -12,8 +12,15 @@ class SortVisualisation extends StatefulWidget {
 class _SortVisualisationState extends State<SortVisualisation> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<AlgorithmState>(
+    return Consumer<SortGraphState?>(
       builder: (ctx, state, _) {
+        if (state == null) {
+          return Expanded(
+            child: Center(
+              child: Text("Nothing"),
+            ),
+          );
+        }
         return Expanded(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,

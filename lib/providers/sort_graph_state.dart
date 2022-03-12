@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pysort_flutter/model/algorithm_step.dart';
 import 'package:pysort_flutter/model/data_set.dart';
 
-class AlgorithmState extends ChangeNotifier {
+class SortGraphState extends ChangeNotifier {
   int _currentStep = 0;
   final List<AlgorithmStep> steps;
   final DataSet data;
@@ -34,7 +34,7 @@ class AlgorithmState extends ChangeNotifier {
     }
   }
 
-  AlgorithmState({required this.steps, required this.data}) {
+  SortGraphState({required this.steps, required this.data}) {
     _currentList = data.data;
   }
 }
