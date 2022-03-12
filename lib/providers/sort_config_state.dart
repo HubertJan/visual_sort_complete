@@ -2,26 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../model/data_set.dart';
 
-import 'python_binder.dart' as python;
+import '../services/python_binder.dart' as python;
 
 class SortConfig extends ChangeNotifier {
   DataSet? _dataSet;
   List<String> _selectedAlgorithmName = [];
-  bool _isReady = false;
-
-  void startSorting() {
-    _isReady = true;
-    notifyListeners();
-  }
-
-  void hasSorted() {
-    _isReady = false;
-    notifyListeners();
-  }
-
-  bool get shouldSort {
-    return _isReady;
-  }
 
   List<String> get allSelectedAlgorithmName {
     return [..._selectedAlgorithmName];
@@ -30,10 +15,6 @@ class SortConfig extends ChangeNotifier {
   set dataSet(DataSet? set) {
     _dataSet = set;
     notifyListeners();
-  }
-
-  Future<void> generateDataSet() async {
-    dataSet = DataSet(await python.generateDataSet());
   }
 
   DataSet? get dataSet {
@@ -54,5 +35,13 @@ class SortConfig extends ChangeNotifier {
   void deselectAlgorithm(String algorithmName) {
     _selectedAlgorithmName.removeWhere((element) => element == algorithmName);
     notifyListeners();
+  }
+
+  bool get isComplete {
+    return _dataSet != null && _selectedAlgorithmName.length != 0;
+  }
+
+  Future<void> generateDataSet() async {
+    dataSet = DataSet(await python.generateDataSet());
   }
 }

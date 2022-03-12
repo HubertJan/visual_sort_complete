@@ -16,8 +16,10 @@ Future<List<int>> generateDataSet() async {
 
 Future<SortResult> sortList(String algorithm, List<int> input) async {
   final inputJson = json.encode(input);
-  final raw = await post(Uri.parse("$_url/dataSet/new"), body: inputJson);
-  final sortResult = SortResult.fromJson(raw);
+  final raw = await get(
+    Uri.parse("$_url/algorithmName"), /* body: inputJson */
+  );
+  final sortResult = SortResult.fromJson(json.decode(raw.body));
   return sortResult;
 }
 

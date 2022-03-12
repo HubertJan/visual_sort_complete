@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pysort_flutter/providers/result_state.dart';
 import 'package:pysort_flutter/providers/sort_config_state.dart';
 import 'package:pysort_flutter/screens/widgets/algorithm_list_item.dart';
 import 'package:pysort_flutter/side_bar/widgets/data_setup.dart';
 
-import '../providers/python_binder.dart' as python;
+import '../services/python_binder.dart' as python;
 
 class SideBar extends StatelessWidget {
   const SideBar({
@@ -28,10 +29,19 @@ class SideBar extends StatelessWidget {
                   child: Icon(
                     Icons.play_arrow,
                   ),
-                  onPressed: () {
-                    Provider.of<SortConfig>(context, listen: false)
-                        .startSorting();
-                  },
+                  onPressed: Provider.of<SortConfig>(context).isComplete
+                      ? () async {
+                          final config =
+                              Provider.of<SortConfig>(context, listen: false);
+                          final results = await python.sortList(
+                              config.allSelectedAlgorithmName[0],
+                              config.dataSet!.data);
+                          Provider.of<ResultsState>(context, listen: false)
+                              .setResults({
+                            config.allSelectedAlgorithmName[0]: results
+                          });
+                        }
+                      : null,
                 ),
               ],
             ),

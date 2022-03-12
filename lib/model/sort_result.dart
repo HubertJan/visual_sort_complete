@@ -17,7 +17,9 @@ class SortResult {
     final steps = <AlgorithmStep>[];
     for (final step in stepsRaw) {
       steps.add(AlgorithmStep(
-          doesMove: step["doesMove"], from: step["from"], to: step["to"]));
+          doesMove: step["doesMove"],
+          from: step["fromPos"],
+          to: step["toPos"]));
     }
     this.steps = steps;
     runtime = Duration(milliseconds: jsonData["runtime"]);

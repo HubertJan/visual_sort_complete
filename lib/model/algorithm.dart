@@ -1,5 +1,5 @@
 import 'package:pysort_flutter/model/sort_result.dart';
-import 'package:pysort_flutter/providers/python_binder.dart';
+import 'package:pysort_flutter/services/python_binder.dart';
 
 class Algorithm {
   final String algorithmName;
