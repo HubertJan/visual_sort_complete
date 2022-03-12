@@ -26,6 +26,8 @@ class RuntimeVisualisation extends StatelessWidget {
                 children: [
                   RuntimeBar(
                     name: state.sortResults.entries.first.key,
+                    ms: state
+                        .sortResults.entries.first.value.runtime.inMicroseconds,
                     height: state.sortResults.entries.first.value.runtime
                             .inMicroseconds /
                         maxRuntime,
@@ -33,6 +35,7 @@ class RuntimeVisualisation extends StatelessWidget {
                   RuntimeBar(
                     name: "Text",
                     height: 0.5,
+                    ms: maxRuntime ~/ 2,
                   ),
                 ],
               ),
@@ -47,8 +50,10 @@ class RuntimeVisualisation extends StatelessWidget {
 class RuntimeBar extends StatelessWidget {
   final double height;
   final String name;
+  final int ms;
 
-  const RuntimeBar({Key? key, required this.height, required this.name})
+  const RuntimeBar(
+      {Key? key, required this.height, required this.name, required this.ms})
       : super(key: key);
 
   @override
@@ -56,9 +61,9 @@ class RuntimeBar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Expanded(
+          Flexible(
+            flex: 5,
             child: FractionallySizedBox(
               alignment: Alignment.centerLeft,
               widthFactor: height,
@@ -68,7 +73,19 @@ class RuntimeBar extends StatelessWidget {
               ),
             ),
           ),
-          Text(name, style: Theme.of(context).textTheme.headline5),
+          Flexible(
+            flex: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  "$ms ms",
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                Text(name, style: Theme.of(context).textTheme.headline5),
+              ],
+            ),
+          ),
         ],
       ),
     );

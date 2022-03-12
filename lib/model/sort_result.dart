@@ -21,7 +21,7 @@ class SortResult {
           step.map((key, value) => MapEntry(key as String, value as int)))));
     }
     this.steps = steps;
-    runtime = Duration(milliseconds: jsonData["runtime"]);
+    runtime = Duration(microseconds: jsonData["runtime"]);
   }
 }
 
