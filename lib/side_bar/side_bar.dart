@@ -28,14 +28,16 @@ class SideBar extends StatelessWidget {
                   child: Icon(
                     Icons.play_arrow,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Provider.of<SortConfig>(context, listen: false)
+                        .startSorting();
+                  },
                 ),
               ],
             ),
           ),
           DatasetSetup(),
-          Container(
-            height: 500,
+          Expanded(
             child: Consumer<SortConfig>(
               builder: (ctx, state, _) {
                 return ListView.builder(
