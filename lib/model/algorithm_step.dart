@@ -1,27 +1,33 @@
 class AlgorithmStep {
-  final int from;
-  final int to;
-  final bool doesMove;
+  final int firstIndex;
+  final int secondIndex;
 
   List<int> doStep(final List<int> oldList) {
     final newList = List<int>.from(oldList);
-    if (doesMove) {
-      final cache = newList[from];
-      newList[from] = newList[to];
-      newList[to] = cache;
+    if (true) {
+      final cache = newList[firstIndex];
+      newList[firstIndex] = newList[secondIndex];
+      newList[secondIndex] = cache;
     }
     return newList;
   }
 
   List<int> undoStep(final List<int> oldList) {
     final newList = List<int>.from(oldList);
-    if (doesMove) {
-      final cache = newList[to];
-      newList[to] = newList[from];
-      newList[from] = cache;
+    if (true) {
+      final cache = newList[secondIndex];
+      newList[secondIndex] = newList[firstIndex];
+      newList[firstIndex] = cache;
     }
     return newList;
   }
 
-  AlgorithmStep({required this.from, required this.to, required this.doesMove});
+  AlgorithmStep({
+    required this.firstIndex,
+    required this.secondIndex,
+  });
+
+  AlgorithmStep.fromMap(Map<String, int> dataMap)
+      : firstIndex = dataMap["firstIndex"]!,
+        secondIndex = dataMap["secondIndex"]!;
 }

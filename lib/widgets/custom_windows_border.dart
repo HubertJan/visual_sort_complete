@@ -15,7 +15,7 @@ class CustomWindowsBorder extends StatelessWidget {
           children: [
             RightSide(),
             Expanded(
-              child: child,
+              child: Container(color: Colors.yellow, child: child),
             )
           ],
         ));
@@ -26,6 +26,7 @@ class RightSide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 32,
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.95),
       ),

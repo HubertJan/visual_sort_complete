@@ -60,7 +60,7 @@ class _DatasetSetupState extends State<DatasetSetup> {
                     child: Text("Datensatz generieren"),
                     onPressed: () async {
                       await Provider.of<SortConfig>(context, listen: false)
-                          .generateDataSet();
+                          .generateDataSet(0, 100, 100);
                     },
                   ),
                 ],

@@ -1,9 +1,10 @@
 class DataSet {
+  final int highestValue;
   final List<int> data;
 
   String asString() {
-    return "5, 3, 9";
+    return data.map((i) => i.toString()).join(",");
   }
 
-  DataSet(this.data);
+  DataSet(this.data, this.highestValue);
 }

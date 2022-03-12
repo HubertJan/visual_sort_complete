@@ -35,7 +35,7 @@ class SideBar extends StatelessWidget {
                               Provider.of<SortConfig>(context, listen: false);
                           final results = await python.sortList(
                               config.allSelectedAlgorithmName[0],
-                              config.dataSet!.data);
+                              config.dataSet!);
                           Provider.of<ResultsState>(context, listen: false)
                               .setResults({
                             config.allSelectedAlgorithmName[0]: results

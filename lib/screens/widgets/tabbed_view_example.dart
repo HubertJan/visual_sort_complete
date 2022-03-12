@@ -36,7 +36,7 @@ class _TabbedViewExamplePageState extends State<TabbedViewExamplePage> {
     tabs.add(
       TabData(
           text: 'TextField',
-          content: Padding(
+          content: const Padding(
             child: TextField(
               decoration: InputDecoration(
                 isDense: true,
@@ -58,11 +58,9 @@ class _TabbedViewExamplePageState extends State<TabbedViewExamplePage> {
     theme.contentArea..padding = EdgeInsets.zero;
     TabbedView tabbedView = TabbedView(controller: _controller);
     return Scaffold(
-        body: Container(
-      child: TabbedViewTheme(
-        data: theme,
-        child: tabbedView,
-      ),
+        body: TabbedViewTheme(
+      data: theme,
+      child: tabbedView,
     ));
   }
 }

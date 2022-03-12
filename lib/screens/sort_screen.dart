@@ -47,9 +47,9 @@ class SortScreen extends StatelessWidget {
                       separatorSize: 2,
                       separatorColor: Colors.black45,
                       children: [
-                        RuntimeVisualisation(),
+                        /*      RuntimeVisualisation(), */
                         SortVisualisation(),
-                        TabbedViewExample(),
+                        /*                    TabbedViewExample(), */
                       ],
                     ),
                   ),

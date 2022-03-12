@@ -16,7 +16,7 @@ class AlgorithmListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 64,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

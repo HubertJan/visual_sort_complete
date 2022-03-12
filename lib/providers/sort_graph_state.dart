@@ -20,16 +20,16 @@ class SortGraphState extends ChangeNotifier {
 
   void nextStep() {
     if (_currentStep < steps.length - 1) {
-      _currentStep += 1;
       _currentList = currentStep.doStep(_currentList);
+      _currentStep += 1;
       notifyListeners();
     }
   }
 
   void previousStep() {
     if (_currentStep != 0) {
-      _currentList = currentStep.undoStep(_currentList);
       _currentStep -= 1;
+      _currentList = currentStep.undoStep(_currentList);
       notifyListeners();
     }
   }

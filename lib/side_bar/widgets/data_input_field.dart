@@ -11,17 +11,15 @@ class DateInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.black54,
-      child: Expanded(
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: SingleChildScrollView(
-              child: Text(
-                text,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.visible,
-              ),
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: SingleChildScrollView(
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.visible,
             ),
           ),
         ),

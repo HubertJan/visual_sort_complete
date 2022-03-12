@@ -8,7 +8,7 @@ void main() {
   runApp(const MyApp());
   doWhenWindowReady(() {
     final win = appWindow;
-    final initialSize = Size(600, 450);
+    final initialSize = Size(1000, 1000);
     win.minSize = initialSize;
     win.size = initialSize;
     win.alignment = Alignment.center;
