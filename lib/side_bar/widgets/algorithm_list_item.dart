@@ -24,10 +24,13 @@ class AlgorithmListItem extends StatelessWidget {
         children: [
           Text(title),
           Text(description),
-          ElevatedButton(
-            child: Text(isSelected ? "Hinzufügen" : "Entfernen"),
-            onPressed: () => onClick(),
-          )
+          Checkbox(
+              fillColor: MaterialStateProperty.all(
+                  Theme.of(context).colorScheme.primary),
+              value: isSelected,
+              onChanged: (_) {
+                onClick();
+              })
         ],
       ),
     );

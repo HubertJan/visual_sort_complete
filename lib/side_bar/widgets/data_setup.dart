@@ -15,6 +15,7 @@ class DatasetSetup extends StatefulWidget {
 class _DatasetSetupState extends State<DatasetSetup> {
   int minNumber = 0;
   int maxNumber = 100;
+  int numberOfElements = 1000;
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +42,14 @@ class _DatasetSetupState extends State<DatasetSetup> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Slider(
-                    label: "Anzahl",
-                    onChanged: (_) {},
-                    value: 0.1,
+                    max: 1000,
+                    divisions: 10,
+                    label: numberOfElements.toString(),
+                    onChanged: (v) {
+                      numberOfElements = (v).toInt();
+                      setState(() {});
+                    },
+                    value: numberOfElements.toDouble(),
                   ),
                   Slider(
                     label: "Anzahl",
@@ -60,7 +66,7 @@ class _DatasetSetupState extends State<DatasetSetup> {
                     child: Text("Datensatz generieren"),
                     onPressed: () async {
                       await Provider.of<SortConfig>(context, listen: false)
-                          .generateDataSet(0, 100, 100);
+                          .generateDataSet(0, 100, numberOfElements);
                     },
                   ),
                 ],

@@ -14,6 +14,16 @@ class ResultsState extends ChangeNotifier {
     notifyListeners();
   }
 
+  Duration get longestRuntime {
+    Duration dur = Duration.zero;
+    for (final res in _results.values) {
+      if (res.runtime > dur) {
+        dur = res.runtime;
+      }
+    }
+    return dur;
+  }
+
   void clear() {
     _results.clear();
     notifyListeners();

@@ -7,6 +7,7 @@ import '../services/python_binder.dart' as python;
 class SortConfig extends ChangeNotifier {
   DataSet? _dataSet;
   List<String> _selectedAlgorithmName = [];
+  bool _hasBeenSolved = false;
 
   List<String> get allSelectedAlgorithmName {
     return [..._selectedAlgorithmName];
@@ -14,7 +15,17 @@ class SortConfig extends ChangeNotifier {
 
   set dataSet(DataSet? set) {
     _dataSet = set;
+    _hasBeenSolved = false;
     notifyListeners();
+  }
+
+  void setSolved() {
+    _hasBeenSolved = true;
+    notifyListeners();
+  }
+
+  bool get hasBeenSolved {
+    return _hasBeenSolved;
   }
 
   DataSet? get dataSet {
@@ -29,11 +40,13 @@ class SortConfig extends ChangeNotifier {
 
   void selectAlgorithm(String algorithmName) {
     _selectedAlgorithmName.add(algorithmName);
+    _hasBeenSolved = false;
     notifyListeners();
   }
 
   void deselectAlgorithm(String algorithmName) {
     _selectedAlgorithmName.removeWhere((element) => element == algorithmName);
+    _hasBeenSolved = false;
     notifyListeners();
   }
 

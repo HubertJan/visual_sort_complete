@@ -15,7 +15,7 @@ class CustomWindowsBorder extends StatelessWidget {
           children: [
             RightSide(),
             Expanded(
-              child: Container(color: Colors.yellow, child: child),
+              child: child,
             )
           ],
         ));

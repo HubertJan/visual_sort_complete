@@ -1,20 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pysort_flutter/model/algorithm_step.dart';
-import 'package:pysort_flutter/model/data_set.dart';
 import 'package:pysort_flutter/providers/result_state.dart';
 import 'package:pysort_flutter/providers/sort_graph_state.dart';
 
-class SortVisualisation extends StatefulWidget {
+class SortVisualisation extends StatelessWidget {
   const SortVisualisation({Key? key}) : super(key: key);
 
-  @override
-  State<SortVisualisation> createState() => _SortVisualisationState();
-}
-
-class _SortVisualisationState extends State<SortVisualisation> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProxyProvider<ResultsState, SortGraphState?>(
@@ -26,7 +17,6 @@ class _SortVisualisationState extends State<SortVisualisation> {
         if (!results.hasResults) {
           return null;
         }
-        final random = Random();
 
         final res = results.sortResults.entries.first.value;
         return SortGraphState(steps: res.steps, data: res.inputData);
@@ -48,7 +38,7 @@ class _SortVisualisationState extends State<SortVisualisation> {
                       .withOpacity(0.99),
                   child: RowBuilder(
                     itemBuilder: (ctx, index) {
-                      final element = state.currentList[index];
+                      final element = state.elementList[index];
                       final BarStatus status;
                       if (state.currentStep.firstIndex == index) {
                         status = BarStatus.selected;
@@ -68,7 +58,7 @@ class _SortVisualisationState extends State<SortVisualisation> {
                         ),
                       );
                     },
-                    itemCount: state.currentList.length,
+                    itemCount: state.elementList.length,
                   ),
                 ),
               ),
@@ -86,15 +76,52 @@ class _SortVisualisationState extends State<SortVisualisation> {
                       children: [
                         TextButton(
                           child: Text("Zurück"),
-                          onPressed: () {
-                            state.previousStep();
-                          },
+                          onPressed: state.canPrevious
+                              ? () {
+                                  state.previousStep();
+                                }
+                              : null,
                         ),
+                        !state.isAutoPlay
+                            ? Column(
+                                children: [
+                                  TextButton(
+                                    child: Text("Automatisch rückwärts"),
+                                    onPressed: state.canPrevious
+                                        ? () {
+                                            state.startAutoPlay(
+                                                delay: const Duration(
+                                                    milliseconds: 1),
+                                                isForwards: false);
+                                          }
+                                        : null,
+                                  ),
+                                  TextButton(
+                                    child: Text("Automatisch vorwärts"),
+                                    onPressed: state.canNext
+                                        ? () {
+                                            state.startAutoPlay(
+                                              delay: const Duration(
+                                                  milliseconds: 1),
+                                            );
+                                          }
+                                        : null,
+                                  ),
+                                ],
+                              )
+                            : TextButton(
+                                child: Text("Stoppen"),
+                                onPressed: () {
+                                  state.stopAutoPlay();
+                                },
+                              ),
                         TextButton(
                           child: Text("Nächster"),
-                          onPressed: () {
-                            state.nextStep();
-                          },
+                          onPressed: state.canNext
+                              ? () {
+                                  state.nextStep();
+                                }
+                              : null,
                         ),
                       ],
                     ),

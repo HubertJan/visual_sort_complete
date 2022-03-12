@@ -1,10 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pysort_flutter/model/algorithm_step.dart';
-import 'package:pysort_flutter/model/data_set.dart';
-import 'package:pysort_flutter/providers/sort_graph_state.dart';
 import 'package:pysort_flutter/providers/sort_config_state.dart';
 import 'package:pysort_flutter/screens/widgets/runtime_visualisation.dart';
 import 'package:pysort_flutter/screens/widgets/sort_visualisation.dart';
@@ -13,7 +8,6 @@ import 'package:pysort_flutter/widgets/custom_windows_border.dart';
 import 'package:resizable_widget/resizable_widget.dart';
 
 import '../providers/result_state.dart';
-import 'widgets/tabbed_view_example.dart';
 
 class SortScreen extends StatelessWidget {
   const SortScreen({Key? key}) : super(key: key);
@@ -29,7 +23,7 @@ class SortScreen extends StatelessWidget {
                   return SortConfig();
                 },
               ),
-              ChangeNotifierProvider<ResultsState?>(
+              ChangeNotifierProvider<ResultsState>(
                 create: (ctx) {
                   return ResultsState();
                 },
@@ -42,15 +36,24 @@ class SortScreen extends StatelessWidget {
                 children: [
                   SideBar(),
                   Expanded(
-                    child: ResizableWidget(
-                      isHorizontalSeparator: true,
-                      separatorSize: 2,
-                      separatorColor: Colors.black45,
-                      children: [
-                        /*      RuntimeVisualisation(), */
-                        SortVisualisation(),
-                        /*                    TabbedViewExample(), */
-                      ],
+                    child: Consumer<ResultsState>(
+                      builder: (ctx, state, _) {
+                        if (!state.hasResults) {
+                          return Container(
+                            color: Theme.of(context).colorScheme.surface,
+                          );
+                        }
+                        return ResizableWidget(
+                          isHorizontalSeparator: true,
+                          separatorSize: 2,
+                          separatorColor: Colors.black45,
+                          children: [
+                            RuntimeVisualisation(),
+                            SortVisualisation(),
+                            /*                    TabbedViewExample(), */
+                          ],
+                        );
+                      },
                     ),
                   ),
                 ],

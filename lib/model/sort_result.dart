@@ -8,7 +8,6 @@ class SortResult {
 /*   final RuntimeResult runtimeResult;
   final List<int> inputList; */
   late final List<AlgorithmStep> steps;
-  late final String algorithmName;
   late final DataSet inputData;
   late final Duration runtime;
 

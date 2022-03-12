@@ -1,44 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:pysort_flutter/providers/result_state.dart';
 
 class RuntimeVisualisation extends StatelessWidget {
   const RuntimeVisualisation({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black54, //Theme.of(context).colorScheme.background,
-      child: Center(
-        child: SingleChildScrollView(
-          child: Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                RuntimeBar(
-                  height: 0.2,
-                ),
-                RuntimeBar(
-                  height: 0.2,
-                ),
-                RuntimeBar(
-                  height: 0.5,
-                ),
-                RuntimeBar(
-                  height: 0.5,
-                ),
-              ],
+    return Consumer<ResultsState>(builder: (context, state, _) {
+      final maxRuntime = state.longestRuntime.inMicroseconds != 0
+          ? (state.longestRuntime.inMicroseconds * 1.3).toInt()
+          : 1;
+
+      return Container(
+        color: Theme.of(context)
+            .colorScheme
+            .background
+            .withOpacity(0.99), //Theme.of(context).colorScheme.background,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RuntimeBar(
+                    name: state.sortResults.entries.first.key,
+                    height: state.sortResults.entries.first.value.runtime
+                            .inMicroseconds /
+                        maxRuntime,
+                  ),
+                  RuntimeBar(
+                    name: "Text",
+                    height: 0.5,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 
 class RuntimeBar extends StatelessWidget {
   final double height;
+  final String name;
 
-  const RuntimeBar({Key? key, required this.height}) : super(key: key);
+  const RuntimeBar({Key? key, required this.height, required this.name})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +68,7 @@ class RuntimeBar extends StatelessWidget {
               ),
             ),
           ),
-          Text("Mergesort", style: Theme.of(context).textTheme.headline5),
+          Text(name, style: Theme.of(context).textTheme.headline5),
         ],
       ),
     );
