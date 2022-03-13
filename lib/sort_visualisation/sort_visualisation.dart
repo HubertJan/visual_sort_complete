@@ -72,7 +72,7 @@ class SortVisualisation extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     TextButton(
-                      child: Text("Zurück"),
+                      child: const Text("Zurück"),
                       onPressed: state.canPrevious
                           ? () {
                               state.previousStep();
@@ -83,7 +83,7 @@ class SortVisualisation extends StatelessWidget {
                         ? Column(
                             children: [
                               TextButton(
-                                child: Text("Automatisch rückwärts"),
+                                child: const Text("Automatisch rückwärts"),
                                 onPressed: state.canPrevious
                                     ? () {
                                         state.startAutoPlay(
@@ -94,7 +94,7 @@ class SortVisualisation extends StatelessWidget {
                                     : null,
                               ),
                               TextButton(
-                                child: Text("Automatisch vorwärts"),
+                                child: const Text("Automatisch vorwärts"),
                                 onPressed: state.canNext
                                     ? () {
                                         state.startAutoPlay(
@@ -107,13 +107,13 @@ class SortVisualisation extends StatelessWidget {
                             ],
                           )
                         : TextButton(
-                            child: Text("Stoppen"),
+                            child: const Text("Stoppen"),
                             onPressed: () {
                               state.stopAutoPlay();
                             },
                           ),
                     TextButton(
-                      child: Text("Nächster"),
+                      child: const Text("Nächster"),
                       onPressed: state.canNext
                           ? () {
                               state.nextStep();

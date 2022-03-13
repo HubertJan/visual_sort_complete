@@ -31,10 +31,9 @@ class SortScreen extends StatelessWidget {
             ],
             builder: (context, snapshot) {
               return Row(
-                mainAxisSize: MainAxisSize.max,
+                textDirection: TextDirection.rtl,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SideBar(),
                   Expanded(
                     child: Consumer<ResultsState>(
                       builder: (ctx, state, _) {
@@ -66,18 +65,26 @@ class SortScreen extends StatelessWidget {
                             ),
                           );
                         }
-                        return ResizableWidget(
-                          isHorizontalSeparator: true,
-                          separatorSize: 6,
-                          separatorColor: Colors.black45,
-                          children: const [
-                            RuntimeVisualisation(),
-                            SortVisualisations(),
-                          ],
-                        );
+                        return state.isFetching
+                            ? Container(
+                                color: Theme.of(context).colorScheme.surface,
+                                child: const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              )
+                            : ResizableWidget(
+                                isHorizontalSeparator: true,
+                                separatorSize: 6,
+                                separatorColor: Colors.black45,
+                                children: const [
+                                  RuntimeVisualisation(),
+                                  SortVisualisations(),
+                                ],
+                              );
                       },
                     ),
                   ),
+                  SideBar(),
                 ],
               );
             }),

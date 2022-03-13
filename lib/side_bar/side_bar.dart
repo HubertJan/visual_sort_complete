@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pysort_flutter/model/sort_result.dart';
+
 import 'package:pysort_flutter/providers/result_state.dart';
 import 'package:pysort_flutter/providers/sort_config_state.dart';
 import 'package:pysort_flutter/side_bar/widgets/algorithm_list_item.dart';
@@ -20,10 +20,18 @@ class SideBar extends StatelessWidget {
       return Container(
         width: 500,
         height: 500,
-        color: Theme.of(context).colorScheme.background,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.background,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 4,
+            ),
+          ],
+        ),
         child: Column(
           children: [
-            Container(
+            SizedBox(
               height: 64,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -35,22 +43,11 @@ class SideBar extends StatelessWidget {
                           ),
                           onPressed: Provider.of<SortConfig>(context).isComplete
                               ? () async {
-                                  final results = await python.sortList(
-                                      state.allSelectedAlgorithmName,
-                                      state.dataSet!);
-                                  final Map<String, SortResult>
-                                      algorithmNameToResult = {};
-                                  for (int i = 0; i < results.length; i += 1) {
-                                    algorithmNameToResult.addAll(
-                                      {
-                                        state.allSelectedAlgorithmName[i]:
-                                            results[i],
-                                      },
-                                    );
-                                  }
-                                  Provider.of<ResultsState>(context,
+                                  await Provider.of<ResultsState>(context,
                                           listen: false)
-                                      .setResults(algorithmNameToResult);
+                                      .fetchResults(
+                                          state.allSelectedAlgorithmName,
+                                          state.dataSet!);
                                   state.setSolved();
                                 }
                               : null,
@@ -62,8 +59,8 @@ class SideBar extends StatelessWidget {
                 ],
               ),
             ),
-            DatasetSetup(),
-            SideBarTitleBar(
+            const DatasetSetup(),
+            const SideBarTitleBar(
               title: "Algorithmen",
             ),
             Expanded(

@@ -31,7 +31,7 @@ class _DatasetSetupState extends State<DatasetSetup> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SideBarTitleBar(
+        const SideBarTitleBar(
           title: "Eingabedaten",
         ),
         Row(
@@ -70,7 +70,7 @@ class _DatasetSetupState extends State<DatasetSetup> {
                         },
                         value: numberOfElements.toDouble(),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       Text("Niedrigste Zahl: $minNumber"),
@@ -84,7 +84,7 @@ class _DatasetSetupState extends State<DatasetSetup> {
                         },
                         value: minNumber.toDouble(),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       Text("Höchste Zahl: $maxNumber"),
@@ -101,13 +101,13 @@ class _DatasetSetupState extends State<DatasetSetup> {
                         },
                         value: maxNumber.toDouble(),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Keine Zahlen doppelt"),
+                          const Text("Keine Zahlen doppelt"),
                           Checkbox(
                             value: onlyUniqueNumbers,
                             fillColor: MaterialStateProperty.all(
@@ -119,12 +119,12 @@ class _DatasetSetupState extends State<DatasetSetup> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       Center(
                         child: TextButton(
-                          child: Text("Datensatz generieren"),
+                          child: const Text("Datensatz generieren"),
                           onPressed: _canGenerateDataSet
                               ? () async {
                                   await Provider.of<SortConfig>(context,
