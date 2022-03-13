@@ -54,4 +54,6 @@ const supportedAlgorithms = {
   "Mergesort": "Stronk together",
   "Bubblesort": "Der Klassiker",
   "Selectionsort": "Sehr wählerisch",
+  "Shellsort": "Etwas",
+  "Heapsort": "Heap, heap",
 };

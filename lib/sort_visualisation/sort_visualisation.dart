@@ -65,7 +65,7 @@ class SortVisualisation extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("${state.currentStepIndex}"),
+                Text("Schritt: ${state.currentStepIndex}"),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,

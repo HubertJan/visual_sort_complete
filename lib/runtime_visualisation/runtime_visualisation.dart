@@ -12,7 +12,7 @@ class RuntimeVisualisation extends StatelessWidget {
       final longestRuntime =
           state.longestRuntimeOf(state.dataSets[0].data.length);
       final maxRuntime = longestRuntime.inMicroseconds != 0
-          ? (longestRuntime.inMicroseconds * 1.3).toInt()
+          ? (longestRuntime.inMicroseconds * 1.3)
           : 1;
 
       return Container(
@@ -27,7 +27,7 @@ class RuntimeVisualisation extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 32.0),
               child: Text(
-                "$dataSetLength Elemente",
+                "Laufzeit bei $dataSetLength Elementen",
                 style: Theme.of(context)
                     .textTheme
                     .headline3!
@@ -43,7 +43,9 @@ class RuntimeVisualisation extends StatelessWidget {
                     final result = state.sortResults.entries.toList()[i];
                     return RuntimeBar(
                       name: result.key,
-                      ms: result.value.runtimes[dataSetLength]!.inMicroseconds,
+                      miliseconds:
+                          result.value.runtimes[dataSetLength]!.inMicroseconds /
+                              1000,
                       height:
                           result.value.runtimes[dataSetLength]!.inMicroseconds /
                               maxRuntime,
@@ -62,10 +64,13 @@ class RuntimeVisualisation extends StatelessWidget {
 class RuntimeBar extends StatelessWidget {
   final double height;
   final String name;
-  final int ms;
+  final double miliseconds;
 
   const RuntimeBar(
-      {Key? key, required this.height, required this.name, required this.ms})
+      {Key? key,
+      required this.height,
+      required this.name,
+      required this.miliseconds})
       : super(key: key);
 
   @override
@@ -95,7 +100,7 @@ class RuntimeBar extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    "$ms ms",
+                    "$miliseconds ms",
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.headline6,
                   ),

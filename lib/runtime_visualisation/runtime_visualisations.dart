@@ -20,13 +20,16 @@ class RuntimeVisualisations extends StatelessWidget {
             keepAlive: true,
             closable: false),
       );
-      tabs.add(
-        TabData(
-            text: "Graphen",
-            content: RuntimeGraphVisualisation(),
-            keepAlive: true,
-            closable: false),
-      );
+      if (results.dataSets.length != 1) {
+        tabs.add(
+          TabData(
+              text: "Graphen",
+              content: RuntimeGraphVisualisation(),
+              keepAlive: true,
+              closable: false),
+        );
+      }
+
       return SortVisualisationTabbedView(tabs: tabs);
     });
   }

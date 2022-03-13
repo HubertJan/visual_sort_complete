@@ -31,6 +31,12 @@ class _DatasetSetupState extends State<DatasetSetup> {
 
   @override
   Widget build(BuildContext context) {
+    String text = "[";
+    for (final dataSet
+        in Provider.of<SortConfig>(context, listen: true).dataSet) {
+      text = "$text[${dataSet.asString()}],";
+    }
+    text = "$text]";
     return Column(
       children: [
         const SideBarTitleBar(
@@ -40,20 +46,7 @@ class _DatasetSetupState extends State<DatasetSetup> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              child: Container(
-                height: 400,
-                color: Theme.of(context).colorScheme.surface,
-                child: DateInputField(
-                    text: !Provider.of<SortConfig>(context, listen: true)
-                                .isFetchingDataSet &&
-                            Provider.of<SortConfig>(context, listen: true)
-                                .dataSet
-                                .isNotEmpty
-                        ? Provider.of<SortConfig>(context, listen: true)
-                            .dataSet[0]
-                            .asString()
-                        : ""),
-              ),
+              child: DateInputField(text: text),
             ),
             Expanded(
               child: Container(

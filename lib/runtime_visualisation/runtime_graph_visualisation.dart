@@ -9,24 +9,26 @@ import '../providers/result_state.dart';
 class RuntimeGraphVisualisation extends StatelessWidget {
   const RuntimeGraphVisualisation({Key? key}) : super(key: key);
 
-  static List<ChartSeries<RuntimePerLength, int>> createData(
+  static List<ChartSeries<RuntimePerLength, double>> createData(
       Map<String, SortResult> results) {
     final Map<String, List<RuntimePerLength>> algorithmToRuntimes = {};
     for (final resultEntry in results.entries) {
       final data = <RuntimePerLength>[];
       for (final runtimeEntry in resultEntry.value.runtimes.entries) {
         data.add(RuntimePerLength(
-            runtimeEntry.key, runtimeEntry.value.inMilliseconds));
+          length: runtimeEntry.key,
+          runtime: runtimeEntry.value.inMicroseconds / 1000,
+        ));
       }
       algorithmToRuntimes[resultEntry.key] = data;
     }
 
-    final List<ChartSeries<RuntimePerLength, int>> seriesList = [];
+    final List<ChartSeries<RuntimePerLength, double>> seriesList = [];
     for (final data in algorithmToRuntimes.entries) {
-      seriesList.add(LineSeries<RuntimePerLength, int>(
+      seriesList.add(LineSeries<RuntimePerLength, double>(
           name: data.key,
-          xValueMapper: (RuntimePerLength data, _) => data.runtime,
-          yValueMapper: (RuntimePerLength data, _) => data.length,
+          xValueMapper: (RuntimePerLength data, _) => data.length.toDouble(),
+          yValueMapper: (RuntimePerLength data, _) => data.runtime,
           dataSource: data.value,
           markerSettings: MarkerSettings(
             isVisible: true,
@@ -57,7 +59,7 @@ class RuntimeGraphVisualisation extends StatelessWidget {
           ),
           primaryYAxis: NumericAxis(
             numberFormat: NumberFormat.compactCurrency(
-                symbol: "ms", locale: "eu", decimalDigits: 0),
+                symbol: "ms", locale: "eu", decimalDigits: 2),
             majorGridLines: MajorGridLines(
               width: 0,
             ),
@@ -76,7 +78,7 @@ class RuntimeGraphVisualisation extends StatelessWidget {
 }
 
 class RuntimePerLength {
-  final int runtime;
+  final double runtime;
   final int length;
-  RuntimePerLength(this.runtime, this.length);
+  RuntimePerLength({required this.runtime, required this.length});
 }
