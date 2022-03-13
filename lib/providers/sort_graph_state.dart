@@ -10,12 +10,12 @@ class SortGraphState extends ChangeNotifier {
   final DataSet data;
   List<int> _elementList = [];
 
-  AlgorithmStep get currentStep {
-    return _steps[_currentStep];
+  AlgorithmStep? get currentStep {
+    return _steps.length > _currentStep ? _steps[_currentStep] : null;
   }
 
   bool get isLastStep {
-    return currentStepIndex == _steps.length - 1;
+    return currentStepIndex == _steps.length;
   }
 
   int get currentStepIndex {
@@ -26,7 +26,7 @@ class SortGraphState extends ChangeNotifier {
 
   void nextStep() {
     if (!isLastStep) {
-      _elementList = currentStep.doStep(_elementList);
+      _elementList = currentStep?.doStep(_elementList) ?? _elementList;
       _currentStep += 1;
       notifyListeners();
     }
@@ -35,7 +35,7 @@ class SortGraphState extends ChangeNotifier {
   void previousStep() {
     if (_currentStep != 0) {
       _currentStep -= 1;
-      _elementList = currentStep.undoStep(_elementList);
+      _elementList = currentStep?.undoStep(_elementList) ?? _elementList;
       notifyListeners();
     }
   }
@@ -87,6 +87,12 @@ class SortGraphState extends ChangeNotifier {
         }
       },
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _autoPlayTimer?.cancel();
   }
 
   SortGraphState({required List<AlgorithmStep> steps, required this.data})

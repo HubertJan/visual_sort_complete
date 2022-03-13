@@ -54,10 +54,11 @@ class SortConfig extends ChangeNotifier {
     return _dataSet != null && _selectedAlgorithmName.length != 0;
   }
 
-  Future<void> generateDataSet(
-      int lowestValue, int heightValue, int length) async {
+  Future<void> generateDataSet(int lowestValue, int heightValue, int length,
+      bool onlyUniqueNumbers) async {
     dataSet = DataSet(
-        await python.generateDataSet(lowestValue, heightValue, length),
+        await python.generateDataSet(
+            lowestValue, heightValue, length, onlyUniqueNumbers),
         heightValue);
   }
 }

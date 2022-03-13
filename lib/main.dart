@@ -13,7 +13,9 @@ void main() {
     win.size = initialSize;
     win.alignment = Alignment.center;
     win.title = "Custom window with Flutter";
+
     win.show();
+    win.maximize();
   });
 }
 
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget {
             colorScheme: const ColorScheme(
               primary: Colors.blue,
               secondary: Color.fromRGBO(255, 255, 0, 1),
-              background: Color.fromRGBO(31, 33, 36, 1),
+              background: Color.fromRGBO(25, 28, 32, 1),
               surface: Color.fromRGBO(17, 17, 17, 1),
               error: Color.fromRGBO(220, 9, 9, 1),
               onPrimary: Colors.white,

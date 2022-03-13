@@ -9,7 +9,7 @@ class CustomWindowsBorder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WindowBorder(
-        color: Colors.black54,
+        color: Colors.black,
         width: 1,
         child: Column(
           children: [
@@ -30,10 +30,22 @@ class RightSide extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.95),
       ),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
         WindowTitleBarBox(
-            child: Row(
-                children: [Expanded(child: MoveWindow()), WindowButtons()])),
+            child:
+                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          SizedBox(
+            width: 16,
+          ),
+          Text(
+            "Visual Sort Complete",
+            style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                  color: Colors.grey,
+                ),
+          ),
+          Expanded(child: MoveWindow()),
+          WindowButtons()
+        ])),
       ]),
     );
   }

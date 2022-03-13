@@ -18,28 +18,17 @@ class RuntimeVisualisation extends StatelessWidget {
             .background
             .withOpacity(0.99), //Theme.of(context).colorScheme.background,
         child: Center(
-          child: SingleChildScrollView(
-            child: Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RuntimeBar(
-                    name: state.sortResults.entries.first.key,
-                    ms: state
-                        .sortResults.entries.first.value.runtime.inMicroseconds,
-                    height: state.sortResults.entries.first.value.runtime
-                            .inMicroseconds /
-                        maxRuntime,
-                  ),
-                  RuntimeBar(
-                    name: "Text",
-                    height: 0.5,
-                    ms: maxRuntime ~/ 2,
-                  ),
-                ],
-              ),
-            ),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: state.sortResults.length,
+            itemBuilder: (context, i) {
+              final result = state.sortResults.entries.toList()[i];
+              return RuntimeBar(
+                name: result.key,
+                ms: result.value.runtime.inMicroseconds,
+                height: result.value.runtime.inMicroseconds / maxRuntime,
+              );
+            },
           ),
         ),
       );
@@ -59,11 +48,15 @@ class RuntimeBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(
+        vertical: 8.0,
+        horizontal: 16,
+      ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Flexible(
-            flex: 5,
+          Expanded(
+            flex: 3,
             child: FractionallySizedBox(
               alignment: Alignment.centerLeft,
               widthFactor: height,
@@ -73,16 +66,25 @@ class RuntimeBar extends StatelessWidget {
               ),
             ),
           ),
-          Flexible(
-            flex: 1,
+          Expanded(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  "$ms ms",
-                  style: Theme.of(context).textTheme.headline6,
+                Flexible(
+                  child: Text(
+                    "$ms ms",
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
                 ),
-                Text(name, style: Theme.of(context).textTheme.headline5),
+                SizedBox(
+                  width: 16,
+                ),
+                Flexible(
+                  child: Text(name,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.headline5),
+                ),
               ],
             ),
           ),
