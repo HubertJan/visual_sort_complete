@@ -13,15 +13,26 @@ class SortResult {
 
   SortResult({required this.steps});
 
-  SortResult.fromJson(dynamic jsonData, this.inputData) {
-    final stepsRaw = jsonData["steps"] as List;
+  SortResult.fromJson(Map<String, dynamic> jsonData, this.inputData) {
+    runtime = Duration(microseconds: jsonData["runtime"]);
+    // All this does, is converting a dynamic to List<Map<String, int?>>
+    // Yes, it's pretty ugly.
+    final rawSteps = List.castFrom<dynamic, List>(jsonData["steps"]);
+    final lessRawSteps = <List<Map<String, int?>>>[];
+    for (final rawSubStep in rawSteps) {
+      final lessRawStep = List.castFrom<dynamic, Map>(rawSubStep);
+      final lesslessRawStep = <Map<String, int?>>[];
+      for (final rawMap in lessRawStep) {
+        lesslessRawStep
+            .add(Map.castFrom<dynamic, dynamic, String, int?>(rawMap));
+      }
+      lessRawSteps.add(lesslessRawStep);
+    }
     final steps = <AlgorithmStep>[];
-    for (final step in stepsRaw) {
-      steps.add(AlgorithmStep.fromMap(Map.from(
-          step.map((key, value) => MapEntry(key as String, value as int)))));
+    for (final lessRawSteps in lessRawSteps) {
+      steps.add(AlgorithmStep.fromList(lessRawSteps));
     }
     this.steps = steps;
-    runtime = Duration(microseconds: jsonData["runtime"]);
   }
 }
 

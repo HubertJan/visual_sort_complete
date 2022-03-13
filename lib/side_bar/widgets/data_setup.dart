@@ -87,7 +87,7 @@ class _DatasetSetupState extends State<DatasetSetup> {
                       SizedBox(
                         height: 16,
                       ),
-                      Text("Höchstzahl: $maxNumber"),
+                      Text("Höchste Zahl: $maxNumber"),
                       Slider(
                         max: 1000,
                         divisions: 100,
@@ -109,11 +109,14 @@ class _DatasetSetupState extends State<DatasetSetup> {
                         children: [
                           Text("Keine Zahlen doppelt"),
                           Checkbox(
-                              value: onlyUniqueNumbers,
-                              onChanged: (value) {
-                                onlyUniqueNumbers = value ?? false;
-                                setState(() {});
-                              }),
+                            value: onlyUniqueNumbers,
+                            fillColor: MaterialStateProperty.all(
+                                Theme.of(context).colorScheme.primary),
+                            onChanged: (value) {
+                              onlyUniqueNumbers = value ?? false;
+                              setState(() {});
+                            },
+                          ),
                         ],
                       ),
                       SizedBox(

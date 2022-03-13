@@ -35,8 +35,8 @@ class _SortVisualisationTabbedViewState
   @override
   Widget build(BuildContext context) {
     final theme = TabbedViewThemeData.dark();
-    theme.tabsArea.color = Colors.black;
-    theme.contentArea..padding = EdgeInsets.zero;
+    theme.tabsArea.color = Theme.of(context).colorScheme.background;
+    theme.contentArea.padding = EdgeInsets.zero;
     TabbedView tabbedView = TabbedView(controller: _controller);
     return Scaffold(
         body: TabbedViewTheme(

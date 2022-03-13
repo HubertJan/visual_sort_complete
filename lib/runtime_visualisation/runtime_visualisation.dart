@@ -15,8 +15,7 @@ class RuntimeVisualisation extends StatelessWidget {
       return Container(
         color: Theme.of(context)
             .colorScheme
-            .background
-            .withOpacity(0.99), //Theme.of(context).colorScheme.background,
+            .surface, //Theme.of(context).colorScheme.background,
         child: Center(
           child: ListView.builder(
             shrinkWrap: true,

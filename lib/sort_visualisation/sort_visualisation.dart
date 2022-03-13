@@ -18,17 +18,24 @@ class SortVisualisation extends StatelessWidget {
         children: [
           Expanded(
             child: Container(
-              color: Theme.of(context).colorScheme.background.withOpacity(0.99),
+              color: Theme.of(context).colorScheme.surface,
               child: RowBuilder(
                 itemBuilder: (ctx, index) {
                   final element = state.elementList[index];
                   final BarStatus status;
-                  if (state.currentStep?.firstIndex == index) {
-                    status = BarStatus.selected;
-                  } else if (state.currentStep?.secondIndex == index) {
-                    status = true ? BarStatus.willBeMoved : BarStatus.selected;
-                  } else {
-                    status = BarStatus.none;
+                  final statusCode = state.currentStep?.getBarStatusOf(index);
+                  switch (statusCode) {
+                    case 20:
+                    case 21:
+                    case 11:
+                      status = BarStatus.selected;
+                      break;
+                    case 10:
+                      status = BarStatus.willBeMoved;
+                      break;
+                    default:
+                      status = BarStatus.none;
+                      break;
                   }
                   return Expanded(
                     child: Align(
@@ -46,7 +53,15 @@ class SortVisualisation extends StatelessWidget {
           ),
           Container(
             width: 300,
-            color: Theme.of(context).colorScheme.background,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black,
+                  blurRadius: 8,
+                )
+              ],
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
