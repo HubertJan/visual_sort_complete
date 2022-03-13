@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pysort_flutter/providers/sort_config_state.dart';
+import 'package:pysort_flutter/runtime_visualisation/runtime_visualisations.dart';
 import 'package:pysort_flutter/side_bar/side_bar.dart';
 import 'package:pysort_flutter/sort_visualisation/sort_visualisations.dart';
 import 'package:pysort_flutter/widgets/custom_windows_border.dart';
@@ -77,7 +78,7 @@ class SortScreen extends StatelessWidget {
                                 separatorSize: 6,
                                 separatorColor: Colors.black45,
                                 children: const [
-                                  RuntimeVisualisation(),
+                                  RuntimeVisualisations(),
                                   SortVisualisations(),
                                 ],
                               );

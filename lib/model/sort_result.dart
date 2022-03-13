@@ -1,20 +1,26 @@
 import 'dart:core';
 
 import 'package:pysort_flutter/model/algorithm_step.dart';
-
-import 'data_set.dart';
+import 'package:pysort_flutter/model/data_set.dart';
 
 class SortResult {
-/*   final RuntimeResult runtimeResult;
-  final List<int> inputList; */
-  late final List<AlgorithmStep> steps;
-  late final DataSet inputData;
-  late final Duration runtime;
+  final List<AlgorithmStep> _steps = [];
+  final Map<int, Duration> _runtimes = {};
 
-  SortResult({required this.steps});
+  List<AlgorithmStep> get steps {
+    return [..._steps];
+  }
 
-  SortResult.fromJson(Map<String, dynamic> jsonData, this.inputData) {
-    runtime = Duration(microseconds: jsonData["runtime"]);
+  Map<int, Duration> get runtimes {
+    return {..._runtimes};
+  }
+
+  SortResult.fromJson(Map<String, dynamic> jsonData, List<DataSet> inputData) {
+    final runtimes = List.castFrom<dynamic, int>(jsonData["runtimes"] as List);
+    for (int i = 0; i < runtimes.length; i += 1) {
+      _runtimes[inputData[i].data.length] = Duration(microseconds: runtimes[i]);
+    }
+
     // All this does, is converting a dynamic to List<Map<String, int?>>
     // Yes, it's pretty ugly.
     final rawSteps = List.castFrom<dynamic, List>(jsonData["steps"]);
@@ -32,7 +38,7 @@ class SortResult {
     for (final lessRawSteps in lessRawSteps) {
       steps.add(AlgorithmStep.fromList(lessRawSteps));
     }
-    this.steps = steps;
+    _steps.addAll(steps);
   }
 }
 

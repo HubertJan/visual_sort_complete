@@ -51,7 +51,7 @@ class SortGraphStateProvider extends StatelessWidget {
 
         final res =
             results.sortResults.entries.toList()[resultStateIndex].value;
-        return SortGraphState(steps: res.steps, data: res.inputData);
+        return SortGraphState(steps: res.steps, data: results.dataSets[0]);
       },
       builder: (ctx, _) {
         return const SortVisualisation();

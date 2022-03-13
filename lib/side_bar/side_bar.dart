@@ -47,7 +47,7 @@ class SideBar extends StatelessWidget {
                                           listen: false)
                                       .fetchResults(
                                           state.allSelectedAlgorithmName,
-                                          state.dataSet!);
+                                          state.dataSet);
                                   state.setSolved();
                                 }
                               : null,

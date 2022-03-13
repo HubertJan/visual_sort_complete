@@ -5,18 +5,17 @@ import '../model/data_set.dart';
 import '../services/python_binder.dart' as python;
 
 class SortConfig extends ChangeNotifier {
-  DataSet? _dataSet;
+  List<DataSet> _dataSet = [];
   List<String> _selectedAlgorithmName = [];
   bool _hasBeenSolved = false;
+  bool _isFetchingDataSet = false;
+
+  bool get isFetchingDataSet {
+    return _isFetchingDataSet;
+  }
 
   List<String> get allSelectedAlgorithmName {
     return [..._selectedAlgorithmName];
-  }
-
-  set dataSet(DataSet? set) {
-    _dataSet = set;
-    _hasBeenSolved = false;
-    notifyListeners();
   }
 
   void setSolved() {
@@ -28,7 +27,7 @@ class SortConfig extends ChangeNotifier {
     return _hasBeenSolved;
   }
 
-  DataSet? get dataSet {
+  List<DataSet> get dataSet {
     return _dataSet;
   }
 
@@ -51,14 +50,21 @@ class SortConfig extends ChangeNotifier {
   }
 
   bool get isComplete {
-    return _dataSet != null && _selectedAlgorithmName.length != 0;
+    return _dataSet.isNotEmpty && _selectedAlgorithmName.isNotEmpty;
   }
 
-  Future<void> generateDataSet(int lowestValue, int heightValue, int length,
-      bool onlyUniqueNumbers) async {
-    dataSet = DataSet(
-        await python.generateDataSet(
-            lowestValue, heightValue, length, onlyUniqueNumbers),
-        heightValue);
+  Future<void> generateDataSet(int lowestValue, int heightValue, int lowLength,
+      int heightLength, int stepLength, bool onlyUniqueNumbers) async {
+    _dataSet = [];
+    _hasBeenSolved = false;
+    _isFetchingDataSet = true;
+    notifyListeners();
+    final dataSetsRaw = await python.generateDataSet(lowestValue, heightValue,
+        lowLength, heightLength, stepLength, onlyUniqueNumbers);
+    for (final set in dataSetsRaw) {
+      _dataSet.add(DataSet(set, heightValue));
+    }
+    _isFetchingDataSet = false;
+    notifyListeners();
   }
 }

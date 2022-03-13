@@ -6,6 +6,7 @@ import '../services/python_binder.dart' as python;
 
 class ResultsState extends ChangeNotifier {
   final Map<String, SortResult> _results = {};
+  final List<DataSet> _dataSets = [];
   bool _isFetching = false;
 
   bool get isFetching {
@@ -16,13 +17,19 @@ class ResultsState extends ChangeNotifier {
     return {..._results};
   }
 
+  List<DataSet> get dataSets {
+    return [..._dataSets];
+  }
+
   void setResults(Map<String, SortResult> newResult) {}
 
   Future<void> fetchResults(
-      List<String> allSelectedAlgorithmName, DataSet dataSet) async {
+      List<String> allSelectedAlgorithmName, List<DataSet> dataSets) async {
     _isFetching = true;
     notifyListeners();
-    final results = await python.sortList(allSelectedAlgorithmName, dataSet);
+    final results = await python.sortList(allSelectedAlgorithmName, dataSets);
+    _dataSets.clear();
+    _dataSets.addAll(dataSets);
     final Map<String, SortResult> algorithmNameToResult = {};
     for (int i = 0; i < results.length; i += 1) {
       algorithmNameToResult.addAll(
@@ -37,11 +44,11 @@ class ResultsState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Duration get longestRuntime {
+  Duration longestRuntimeOf(int dataSetLength) {
     Duration dur = Duration.zero;
     for (final res in _results.values) {
-      if (res.runtime > dur) {
-        dur = res.runtime;
+      if (res.runtimes[dataSetLength]! > dur) {
+        dur = res.runtimes[dataSetLength]!;
       }
     }
     return dur;

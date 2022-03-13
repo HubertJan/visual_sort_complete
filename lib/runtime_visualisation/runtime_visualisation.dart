@@ -8,27 +8,51 @@ class RuntimeVisualisation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<ResultsState>(builder: (context, state, _) {
-      final maxRuntime = state.longestRuntime.inMicroseconds != 0
-          ? (state.longestRuntime.inMicroseconds * 1.3).toInt()
+      final dataSetLength = state.dataSets[0].data.length;
+      final longestRuntime =
+          state.longestRuntimeOf(state.dataSets[0].data.length);
+      final maxRuntime = longestRuntime.inMicroseconds != 0
+          ? (longestRuntime.inMicroseconds * 1.3).toInt()
           : 1;
 
       return Container(
+        padding: EdgeInsets.all(32),
         color: Theme.of(context)
             .colorScheme
             .surface, //Theme.of(context).colorScheme.background,
-        child: Center(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: state.sortResults.length,
-            itemBuilder: (context, i) {
-              final result = state.sortResults.entries.toList()[i];
-              return RuntimeBar(
-                name: result.key,
-                ms: result.value.runtime.inMicroseconds,
-                height: result.value.runtime.inMicroseconds / maxRuntime,
-              );
-            },
-          ),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 32.0),
+              child: Text(
+                "$dataSetLength Elemente",
+                style: Theme.of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(color: Colors.white),
+              ),
+            ),
+            Expanded(
+              child: Center(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: state.sortResults.length,
+                  itemBuilder: (context, i) {
+                    final result = state.sortResults.entries.toList()[i];
+                    return RuntimeBar(
+                      name: result.key,
+                      ms: result.value.runtimes[dataSetLength]!.inMicroseconds,
+                      height:
+                          result.value.runtimes[dataSetLength]!.inMicroseconds /
+                              maxRuntime,
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
       );
     });

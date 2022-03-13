@@ -17,14 +17,16 @@ class DatasetSetup extends StatefulWidget {
 class _DatasetSetupState extends State<DatasetSetup> {
   int minNumber = 0;
   int maxNumber = 100;
-  int numberOfElements = 1000;
+  int minNumberOfElements = 100;
+  int maxNumberOfElements = 1000;
+
   bool onlyUniqueNumbers = false;
 
   bool get _canGenerateDataSet {
     return maxNumber != 0 &&
         minNumber != maxNumber &&
-        numberOfElements != 0 &&
-        (!onlyUniqueNumbers || numberOfElements < maxNumber + 1 - minNumber);
+        minNumberOfElements != 0 &&
+        (!onlyUniqueNumbers || maxNumberOfElements < maxNumber + 1 - minNumber);
   }
 
   @override
@@ -40,11 +42,17 @@ class _DatasetSetupState extends State<DatasetSetup> {
             Expanded(
               child: Container(
                 height: 400,
+                color: Theme.of(context).colorScheme.surface,
                 child: DateInputField(
-                    text: Provider.of<SortConfig>(context, listen: true)
-                            .dataSet
-                            ?.asString() ??
-                        ""),
+                    text: !Provider.of<SortConfig>(context, listen: true)
+                                .isFetchingDataSet &&
+                            Provider.of<SortConfig>(context, listen: true)
+                                .dataSet
+                                .isNotEmpty
+                        ? Provider.of<SortConfig>(context, listen: true)
+                            .dataSet[0]
+                            .asString()
+                        : ""),
               ),
             ),
             Expanded(
@@ -56,19 +64,22 @@ class _DatasetSetupState extends State<DatasetSetup> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        "Anzahl an Elementen: $numberOfElements",
+                      const Text(
+                        "Anzahl an Elementen:",
                         textAlign: TextAlign.start,
                       ),
-                      Slider(
+                      Text(" $minNumberOfElements bis $maxNumberOfElements"),
+                      RangeSlider(
+                        min: 100,
                         max: 1000,
-                        divisions: 10,
-                        label: numberOfElements.toString(),
+                        divisions: 9,
                         onChanged: (v) {
-                          numberOfElements = (v).toInt();
+                          minNumberOfElements = v.start.ceil();
+                          maxNumberOfElements = v.end.ceil();
                           setState(() {});
                         },
-                        value: numberOfElements.toDouble(),
+                        values: RangeValues(minNumberOfElements.toDouble(),
+                            maxNumberOfElements.toDouble()),
                       ),
                       const SizedBox(
                         height: 16,
@@ -129,8 +140,13 @@ class _DatasetSetupState extends State<DatasetSetup> {
                               ? () async {
                                   await Provider.of<SortConfig>(context,
                                           listen: false)
-                                      .generateDataSet(minNumber, maxNumber,
-                                          numberOfElements, onlyUniqueNumbers);
+                                      .generateDataSet(
+                                          minNumber,
+                                          maxNumber,
+                                          minNumberOfElements,
+                                          maxNumberOfElements,
+                                          100,
+                                          onlyUniqueNumbers);
                                 }
                               : null,
                         ),

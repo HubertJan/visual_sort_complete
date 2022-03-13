@@ -7,25 +7,37 @@ import '../model/data_set.dart';
 
 const _url = "http://localhost:8000";
 
-Future<List<int>> generateDataSet(int lowestValue, int heightValue, int length,
+Future<List<List<int>>> generateDataSet(
+    int lowestValue,
+    int heightValue,
+    int lowLength,
+    int highLength,
+    int stepLength,
     bool onlyUniqueNumbers) async {
   final inputJson = json.encode({
-    "amount": length,
+    "minAmount": lowLength,
+    "maxAmount": highLength,
+    "stepAmount": stepLength,
     "min": lowestValue,
     "max": heightValue,
     "onlyUniqueNumbers": onlyUniqueNumbers
   });
-  final raw = await post(Uri.parse("$_url/dataSet"), body: inputJson);
-  final List<int> data =
-      (json.decode(raw.body) as List).map((e) => e as int).toList();
-  return data;
+  final raw = await post(Uri.parse("$_url/dataSets"), body: inputJson);
+  final List<List> dataListRaw =
+      (json.decode(raw.body) as List).map((e) => e as List).toList();
+  final List<List<int>> dataList = [];
+  for (final data in dataListRaw) {
+    dataList.add(List.castFrom<dynamic, int>(data));
+  }
+  return dataList;
 }
 
 Future<List<SortResult>> sortList(
-    List<String> algorithms, DataSet input) async {
+    List<String> algorithms, List<DataSet> input) async {
+  final dataList = List.generate(input.length, (index) => input[index].data);
   final inputJson = json.encode({
     "algorithms": algorithms,
-    "dataSet": input.data,
+    "dataSet": dataList,
   });
   final raw = await post(Uri.parse("$_url/evaluated"), body: inputJson /*  */
       );
