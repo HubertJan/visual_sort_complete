@@ -8,7 +8,7 @@ void main() {
   runApp(const MyApp());
   doWhenWindowReady(() {
     final win = appWindow;
-    final initialSize = Size(1000, 1000);
+    const initialSize = Size(1000, 1000);
     win.minSize = initialSize;
     win.size = initialSize;
     win.alignment = Alignment.center;
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
               brightness: Brightness.light,
             ),
           ),
-          home: SortScreen(),
+          home: const SortScreen(),
         );
       },
     );

@@ -49,7 +49,7 @@ class _DatasetSetupState extends State<DatasetSetup> {
               child: DateInputField(text: text),
             ),
             Expanded(
-              child: Container(
+              child: SizedBox(
                 height: 400,
                 child: Padding(
                   padding: const EdgeInsets.all(32.0),

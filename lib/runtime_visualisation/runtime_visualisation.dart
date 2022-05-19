@@ -16,7 +16,7 @@ class RuntimeVisualisation extends StatelessWidget {
           : 1;
 
       return Container(
-        padding: EdgeInsets.all(32),
+        padding: const EdgeInsets.all(32),
         color: Theme.of(context)
             .colorScheme
             .surface, //Theme.of(context).colorScheme.background,
@@ -105,7 +105,7 @@ class RuntimeBar extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 16,
                 ),
                 Flexible(

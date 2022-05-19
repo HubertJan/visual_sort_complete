@@ -50,10 +50,10 @@ Future<List<SortResult>> sortList(
 }
 
 const supportedAlgorithms = {
-  "Quicksort": "Best name ever",
-  "Mergesort": "Stronk together",
+  "Quicksort": '"Schnell"sortieren',
+  "Mergesort": "teile und hersche",
   "Bubblesort": "Der Klassiker",
-  "Selectionsort": "Sehr wählerisch",
-  "Shellsort": "Etwas",
-  "Heapsort": "Heap, heap",
+  "Selectionsort": "Ziemlich einfach",
+  "Shellsort": "Sieht cool aus",
+  "Heapsort": "Besseres Selectionsort",
 };

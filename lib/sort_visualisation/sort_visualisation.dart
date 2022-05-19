@@ -176,11 +176,11 @@ class RowBuilder extends StatelessWidget {
     Key? key,
     required this.itemBuilder,
     required this.itemCount,
-    this.mainAxisAlignment: MainAxisAlignment.start,
-    this.mainAxisSize: MainAxisSize.max,
-    this.crossAxisAlignment: CrossAxisAlignment.center,
+    this.mainAxisAlignment = MainAxisAlignment.start,
+    this.mainAxisSize = MainAxisSize.max,
+    this.crossAxisAlignment = CrossAxisAlignment.center,
     this.textDirection = TextDirection.ltr,
-    this.verticalDirection: VerticalDirection.down,
+    this.verticalDirection = VerticalDirection.down,
   }) : super(key: key);
 
   @override

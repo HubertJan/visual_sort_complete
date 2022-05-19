@@ -30,7 +30,7 @@ class RuntimeGraphVisualisation extends StatelessWidget {
           xValueMapper: (RuntimePerLength data, _) => data.length.toDouble(),
           yValueMapper: (RuntimePerLength data, _) => data.runtime,
           dataSource: data.value,
-          markerSettings: MarkerSettings(
+          markerSettings: const MarkerSettings(
             isVisible: true,
           )));
     }
@@ -49,7 +49,7 @@ class RuntimeGraphVisualisation extends StatelessWidget {
             textStyle: Theme.of(context).textTheme.bodyLarge,
           ),
           primaryXAxis: NumericAxis(
-            majorGridLines: MajorGridLines(
+            majorGridLines: const MajorGridLines(
               width: 0,
             ),
             isVisible: false,
@@ -60,13 +60,13 @@ class RuntimeGraphVisualisation extends StatelessWidget {
           primaryYAxis: NumericAxis(
             numberFormat: NumberFormat.compactCurrency(
                 symbol: "ms", locale: "eu", decimalDigits: 2),
-            majorGridLines: MajorGridLines(
+            majorGridLines: const MajorGridLines(
               width: 0,
             ),
             isVisible: true,
           ),
           plotAreaBorderWidth: 0,
-          palette: [Colors.blue, Colors.yellow, Colors.red, Colors.green],
+          palette: const [Colors.blue, Colors.yellow, Colors.red, Colors.green],
           borderWidth: 0,
           tooltipBehavior: TooltipBehavior(enable: true),
           series: createData(state.sortResults),

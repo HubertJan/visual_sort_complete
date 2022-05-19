@@ -6,7 +6,7 @@ import '../services/python_binder.dart' as python;
 
 class SortConfig extends ChangeNotifier {
   List<DataSet> _dataSet = [];
-  List<String> _selectedAlgorithmName = [];
+  final List<String> _selectedAlgorithmName = [];
   bool _hasBeenSolved = false;
   bool _isFetchingDataSet = false;
 

@@ -16,7 +16,7 @@ class RuntimeVisualisations extends StatelessWidget {
       tabs.add(
         TabData(
             text: "Balkendiagramm",
-            content: RuntimeVisualisation(),
+            content: const RuntimeVisualisation(),
             keepAlive: true,
             closable: false),
       );
@@ -24,7 +24,7 @@ class RuntimeVisualisations extends StatelessWidget {
         tabs.add(
           TabData(
               text: "Graphen",
-              content: RuntimeGraphVisualisation(),
+              content: const RuntimeGraphVisualisation(),
               keepAlive: true,
               closable: false),
         );

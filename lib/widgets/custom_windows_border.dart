@@ -34,7 +34,7 @@ class RightSide extends StatelessWidget {
         WindowTitleBarBox(
             child:
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          SizedBox(
+          const SizedBox(
             width: 16,
           ),
           Text(
@@ -53,14 +53,14 @@ class RightSide extends StatelessWidget {
 
 final buttonColors = WindowButtonColors(
     iconNormal: Colors.white,
-    mouseOver: Color(0xFFF6A00C),
-    mouseDown: Color(0xFF805306),
-    iconMouseOver: Color(0xFF805306),
-    iconMouseDown: Color(0xFFFFD500));
+    mouseOver: const Color(0xFFF6A00C),
+    mouseDown: const Color(0xFF805306),
+    iconMouseOver: const Color(0xFF805306),
+    iconMouseDown: const Color(0xFFFFD500));
 
 final closeButtonColors = WindowButtonColors(
-    mouseOver: Color(0xFFD32F2F),
-    mouseDown: Color(0xFFB71C1C),
+    mouseOver: const Color(0xFFD32F2F),
+    mouseDown: const Color(0xFFB71C1C),
     iconNormal: Colors.white,
     iconMouseOver: Colors.white);
 

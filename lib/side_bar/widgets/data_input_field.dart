@@ -15,7 +15,7 @@ class DateInputField extends StatelessWidget {
       height: 400,
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.all(16),
-      child: Container(
+      child: SizedBox(
         height: double.infinity,
         width: double.infinity,
         child: Stack(

@@ -8,7 +8,6 @@ import 'package:pysort_flutter/widgets/custom_windows_border.dart';
 import 'package:resizable_widget/resizable_widget.dart';
 
 import '../providers/result_state.dart';
-import '../runtime_visualisation/runtime_visualisation.dart';
 
 class SortScreen extends StatelessWidget {
   const SortScreen({Key? key}) : super(key: key);
@@ -85,7 +84,7 @@ class SortScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  SideBar(),
+                  const SideBar(),
                 ],
               );
             }),
