@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pysort_flutter/providers/result_state.dart';
-import 'package:pysort_flutter/runtime_visualisation/runtime_graph_visualisation.dart';
-import 'package:pysort_flutter/runtime_visualisation/runtime_visualisation.dart';
-import 'package:pysort_flutter/sort_visualisation/sort_visualisation_tabbed_view.dart';
+
 import 'package:tabbed_view/tabbed_view.dart';
+
+import '../sort_visualisation/widgets/sort_visualisation_tabbed_view.dart';
+import 'widgets/runtime_visualisation.dart';
+import 'widgets/runtime_graph_visualisation.dart';
 
 class RuntimeVisualisations extends StatelessWidget {
   const RuntimeVisualisations({Key? key}) : super(key: key);

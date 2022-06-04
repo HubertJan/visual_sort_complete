@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pysort_flutter/model/sort_result.dart';
+import 'package:pysort_flutter/providers/result_state.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
-
-import '../providers/result_state.dart';
 
 class RuntimeGraphVisualisation extends StatelessWidget {
   const RuntimeGraphVisualisation({Key? key}) : super(key: key);

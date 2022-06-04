@@ -4,8 +4,8 @@ import 'package:pysort_flutter/providers/result_state.dart';
 import 'package:pysort_flutter/providers/sort_graph_state.dart';
 import 'package:tabbed_view/tabbed_view.dart';
 
-import 'sort_visualisation.dart';
-import 'sort_visualisation_tabbed_view.dart';
+import 'widgets/sort_visualisation.dart';
+import 'widgets/sort_visualisation_tabbed_view.dart';
 
 class SortVisualisations extends StatelessWidget {
   const SortVisualisations({Key? key}) : super(key: key);
