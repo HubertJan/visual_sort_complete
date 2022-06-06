@@ -6,8 +6,8 @@ import 'package:pysort_flutter/providers/result_state.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 
-class RuntimeGraphVisualisation extends StatelessWidget {
-  const RuntimeGraphVisualisation({Key? key}) : super(key: key);
+class LineDiagramVisualisation extends StatelessWidget {
+  const LineDiagramVisualisation({Key? key}) : super(key: key);
 
   static List<ChartSeries<RuntimePerLength, double>> createData(
       Map<String, AlgorithmExaminationResult> results, List<DataSet> dataSets) {

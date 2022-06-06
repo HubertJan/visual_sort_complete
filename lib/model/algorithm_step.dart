@@ -59,13 +59,13 @@ class SwapAlgorithmStep extends AlgorithmStep {
       : super(subSteps: [
           AlgorithmSubStep(
             index: firstElementIndex,
-            barType: 0,
+            barType: 10,
             newValueByIndex: secondElementIndex,
             beforeChangeValueByIndex: secondElementIndex,
           ),
           AlgorithmSubStep(
             index: secondElementIndex,
-            barType: 1,
+            barType: 11,
             newValueByIndex: firstElementIndex,
             beforeChangeValueByIndex: firstElementIndex,
           ),

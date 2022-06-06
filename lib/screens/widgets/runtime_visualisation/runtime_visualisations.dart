@@ -5,8 +5,8 @@ import 'package:pysort_flutter/providers/result_state.dart';
 import 'package:tabbed_view/tabbed_view.dart';
 
 import '../sort_visualisation/widgets/sort_visualisation_tabbed_view.dart';
-import 'widgets/runtime_visualisation.dart';
-import 'widgets/runtime_graph_visualisation.dart';
+import 'widgets/bar_graph_visualisation.dart';
+import 'widgets/line_diagram_visualisation.dart';
 
 class RuntimeVisualisations extends StatelessWidget {
   const RuntimeVisualisations({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class RuntimeVisualisations extends StatelessWidget {
       tabs.add(
         TabData(
             text: "Balkendiagramm",
-            content: const RuntimeVisualisation(),
+            content: const BarGraphVisualisation(),
             keepAlive: true,
             closable: false),
       );
@@ -26,7 +26,7 @@ class RuntimeVisualisations extends StatelessWidget {
         tabs.add(
           TabData(
               text: "Graphen",
-              content: const RuntimeGraphVisualisation(),
+              content: const LineDiagramVisualisation(),
               keepAlive: true,
               closable: false),
         );
