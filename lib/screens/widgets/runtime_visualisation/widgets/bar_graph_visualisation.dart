@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pysort_flutter/model/data_set.dart';
 import 'package:pysort_flutter/providers/result_state.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
-class BarGraphVisualisation extends StatelessWidget {
+class BarGraphVisualisation extends StatefulWidget {
   const BarGraphVisualisation({Key? key}) : super(key: key);
+
+  @override
+  State<BarGraphVisualisation> createState() => _BarGraphVisualisationState();
+}
+
+class _BarGraphVisualisationState extends State<BarGraphVisualisation> {
+  DataSet? _currentDataSet;
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ResultsState>(builder: (context, state, _) {
-      final dataSetLength = state.dataSets[0].data.length;
-      final dataSetId = state.dataSets[0].id;
+      if (_currentDataSet != null &&
+          !state.dataSets.any((element) => element.id == _currentDataSet?.id)) {
+        _currentDataSet = null;
+      }
+      _currentDataSet ??= state.dataSets[0];
+      final dataSet = state.dataSets
+          .firstWhere((element) => element.id == _currentDataSet!.id);
+      final dataSetLength = dataSet.data.length;
       final longestRuntime =
           state.calculateLongestRuntime(dataSetLength: dataSetLength);
       final maxRuntime = longestRuntime.inMicroseconds != 0
@@ -27,12 +42,63 @@ class BarGraphVisualisation extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 32.0),
-              child: Text(
-                "Laufzeit bei $dataSetLength Elementen",
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(color: Colors.white),
+              child: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                /*             mainAxisAlignment: MainAxisAlignment.center, */
+                children: [
+                  Text(
+                    "Laufzeit bei ",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.white),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: ButtonTheme(
+                      alignedDropdown: true,
+                      child: DropdownButton<String>(
+                        itemHeight: 64,
+                        alignment: Alignment.topLeft,
+                        /*      iconSize: 0, */
+                        iconEnabledColor:
+                            Theme.of(context).colorScheme.onBackground,
+                        underline: const SizedBox(),
+                        dropdownColor: Theme.of(context).colorScheme.background,
+                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                              color: Colors.white,
+                            ),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(4)),
+                        value: _currentDataSet!.id,
+                        items: state.dataSets
+                            .map(
+                              (set) => DropdownMenuItem(
+                                child: Text("${set.data.length}"),
+                                value: set.id,
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (newId) {
+                          _currentDataSet = state.dataSets
+                              .firstWhere((element) => element.id == newId);
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                  ),
+                  Text(
+                    " Elementen",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.white),
+                  ),
+                ],
               ),
             ),
             Expanded(
@@ -44,8 +110,8 @@ class BarGraphVisualisation extends StatelessWidget {
                     final result = state.sortResults.entries.toList()[i];
                     return LayoutBuilder(
                       builder: (context, constraints) {
-                        final runtime =
-                            result.value.runtimePerDataSet[dataSetId]!;
+                        final runtime = result
+                            .value.runtimePerDataSet[_currentDataSet!.id]!;
                         return RuntimeBar(
                           name: result.key,
                           runtime: runtime,
