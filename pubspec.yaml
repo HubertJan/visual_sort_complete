@@ -42,6 +42,7 @@ dependencies:
   tabbed_view: ^1.11.0
   bitsdojo_window: ^0.1.2
   syncfusion_flutter_charts: ^20.1.56
+  uuid: ^3.0.6
 
 
 dev_dependencies:

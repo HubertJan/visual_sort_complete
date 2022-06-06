@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pysort_flutter/providers/sort_config_state.dart';
-import 'package:pysort_flutter/runtime_visualisation/runtime_visualisations.dart';
-import 'package:pysort_flutter/side_bar/side_bar.dart';
-import 'package:pysort_flutter/sort_visualisation/sort_visualisations.dart';
 import 'package:pysort_flutter/widgets/custom_windows_border.dart';
 import 'package:resizable_widget/resizable_widget.dart';
 
 import '../providers/result_state.dart';
+import 'widgets/runtime_visualisation/runtime_visualisations.dart';
+import 'widgets/side_bar/side_bar.dart';
+import 'widgets/sort_visualisation/sort_visualisations.dart';
 
 class SortScreen extends StatelessWidget {
   const SortScreen({Key? key}) : super(key: key);

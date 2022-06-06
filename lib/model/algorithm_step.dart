@@ -1,14 +1,18 @@
 class AlgorithmStep {
-  late final List<AlgorithmSubStep> subSteps;
+  late final List<AlgorithmSubStep> _subSteps;
+
+  List<AlgorithmSubStep> get subSteps {
+    return [..._subSteps];
+  }
 
   List<int> doStep(final List<int> oldList) {
     final newList = List<int>.from(oldList);
     for (final subStep in subSteps) {
-      if (subStep.value != null) {
-        newList[subStep.index] = subStep.value!;
+      if (subStep.newValue != null) {
+        newList[subStep.index] = subStep.newValue!;
       }
-      if (subStep.valueByIndex != null) {
-        newList[subStep.index] = oldList[subStep.valueByIndex!];
+      if (subStep.newValueByIndex != null) {
+        newList[subStep.index] = oldList[subStep.newValueByIndex!];
       }
     }
     return newList;
@@ -17,26 +21,26 @@ class AlgorithmStep {
   List<int> undoStep(final List<int> oldList) {
     final newList = List<int>.from(oldList);
     for (final subStep in subSteps.reversed) {
-      if (subStep.initValue != null) {
-        newList[subStep.index] = subStep.initValue!;
+      if (subStep.beforeChangeValue != null) {
+        newList[subStep.index] = subStep.beforeChangeValue!;
       }
-      if (subStep.initValueByIndex != null) {
-        newList[subStep.index] = oldList[subStep.initValueByIndex!];
+      if (subStep.beforeChangeValueByIndex != null) {
+        newList[subStep.index] = oldList[subStep.beforeChangeValueByIndex!];
       }
     }
     return newList;
   }
 
   AlgorithmStep({
-    required this.subSteps,
-  });
+    required List<AlgorithmSubStep> subSteps,
+  }) : _subSteps = subSteps;
 
   AlgorithmStep.fromList(List<Map<String, int?>> dataList) {
     final List<AlgorithmSubStep> subSteps = [];
     for (final subStepData in dataList) {
       subSteps.add(AlgorithmSubStep.fromMap(subStepData));
     }
-    this.subSteps = subSteps;
+    _subSteps = subSteps;
   }
 
   int? getBarStatusOf(int index) {
@@ -49,31 +53,50 @@ class AlgorithmStep {
   }
 }
 
+class SwapAlgorithmStep extends AlgorithmStep {
+  SwapAlgorithmStep(
+      {required int firstElementIndex, required int secondElementIndex})
+      : super(subSteps: [
+          AlgorithmSubStep(
+            index: firstElementIndex,
+            barType: 0,
+            newValueByIndex: secondElementIndex,
+            beforeChangeValueByIndex: secondElementIndex,
+          ),
+          AlgorithmSubStep(
+            index: secondElementIndex,
+            barType: 1,
+            newValueByIndex: firstElementIndex,
+            beforeChangeValueByIndex: firstElementIndex,
+          ),
+        ]);
+}
+
 class AlgorithmSubStep {
   final int index;
   final int barType;
-  final int? value;
-  final int? valueByIndex;
-  final int? initValue;
-  final int? initValueByIndex;
+  final int? newValue;
+  final int? newValueByIndex;
+  final int? beforeChangeValue;
+  final int? beforeChangeValueByIndex;
 
   bool get hasValue {
-    return value != null || valueByIndex != null;
+    return newValue != null || newValueByIndex != null;
   }
 
   AlgorithmSubStep(
       {required this.index,
       required this.barType,
-      required this.value,
-      required this.valueByIndex,
-      required this.initValue,
-      required this.initValueByIndex});
+      this.newValue,
+      this.newValueByIndex,
+      this.beforeChangeValue,
+      this.beforeChangeValueByIndex});
 
   AlgorithmSubStep.fromMap(Map<String, int?> dataMap)
       : index = dataMap["index"]!,
         barType = dataMap["barType"]!,
-        value = dataMap["value"],
-        valueByIndex = dataMap["valueByIndex"],
-        initValue = dataMap["initValue"],
-        initValueByIndex = dataMap["initValueByIndex"];
+        newValue = dataMap["value"],
+        newValueByIndex = dataMap["valueByIndex"],
+        beforeChangeValue = dataMap["initValue"],
+        beforeChangeValueByIndex = dataMap["initValueByIndex"];
 }

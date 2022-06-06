@@ -9,8 +9,9 @@ class RuntimeVisualisation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ResultsState>(builder: (context, state, _) {
       final dataSetLength = state.dataSets[0].data.length;
+      final dataSetId = state.dataSets[0].id;
       final longestRuntime =
-          state.longestRuntimeOf(state.dataSets[0].data.length);
+          state.calculateLongestRuntime(dataSetLength: dataSetLength);
       final maxRuntime = longestRuntime.inMicroseconds != 0
           ? (longestRuntime.inMicroseconds * 1.3)
           : 1;
@@ -43,12 +44,12 @@ class RuntimeVisualisation extends StatelessWidget {
                     final result = state.sortResults.entries.toList()[i];
                     return RuntimeBar(
                       name: result.key,
-                      miliseconds:
-                          result.value.runtimes[dataSetLength]!.inMicroseconds /
-                              1000,
-                      height:
-                          result.value.runtimes[dataSetLength]!.inMicroseconds /
-                              maxRuntime,
+                      miliseconds: result.value.runtimePerDataSet[dataSetId]!
+                              .inMicroseconds /
+                          1000,
+                      height: result.value.runtimePerDataSet[dataSetId]!
+                              .inMicroseconds /
+                          maxRuntime,
                     );
                   },
                 ),

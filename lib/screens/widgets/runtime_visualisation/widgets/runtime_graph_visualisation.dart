@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pysort_flutter/model/sort_result.dart';
+import 'package:pysort_flutter/model/algorithm_examination_result.dart';
+import 'package:pysort_flutter/model/data_set.dart';
 import 'package:pysort_flutter/providers/result_state.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
@@ -9,13 +10,15 @@ class RuntimeGraphVisualisation extends StatelessWidget {
   const RuntimeGraphVisualisation({Key? key}) : super(key: key);
 
   static List<ChartSeries<RuntimePerLength, double>> createData(
-      Map<String, SortResult> results) {
+      Map<String, AlgorithmExaminationResult> results, List<DataSet> dataSets) {
     final Map<String, List<RuntimePerLength>> algorithmToRuntimes = {};
     for (final resultEntry in results.entries) {
       final data = <RuntimePerLength>[];
-      for (final runtimeEntry in resultEntry.value.runtimes.entries) {
+      for (final runtimeEntry in resultEntry.value.runtimePerDataSet.entries) {
+        final dataSet =
+            dataSets.firstWhere((element) => element.id == runtimeEntry.key);
         data.add(RuntimePerLength(
-          length: runtimeEntry.key,
+          length: dataSet.data.length,
           runtime: runtimeEntry.value.inMicroseconds / 1000,
         ));
       }
@@ -68,7 +71,7 @@ class RuntimeGraphVisualisation extends StatelessWidget {
           palette: const [Colors.blue, Colors.yellow, Colors.red, Colors.green],
           borderWidth: 0,
           tooltipBehavior: TooltipBehavior(enable: true),
-          series: createData(state.sortResults),
+          series: createData(state.sortResults, state.dataSets),
           backgroundColor: Theme.of(context).colorScheme.surface,
         ),
       );

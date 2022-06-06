@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../model/data_set.dart';
 
-import '../services/python_binder.dart' as python;
-
 class SortConfig extends ChangeNotifier {
   List<DataSet> _dataSet = [];
   final List<String> _selectedAlgorithmName = [];
@@ -53,17 +51,26 @@ class SortConfig extends ChangeNotifier {
     return _dataSet.isNotEmpty && _selectedAlgorithmName.isNotEmpty;
   }
 
-  Future<void> generateDataSet(int lowestValue, int heightValue, int lowLength,
-      int heightLength, int stepLength, bool onlyUniqueNumbers) async {
+  Future<void> generateDataSet({
+    required int lowestValue,
+    required int highestValue,
+    required int initialAmount,
+    required int maxAmount,
+    required int amountIncreasePerDataSet,
+    required bool onlyUniqueNumbers,
+  }) async {
     _dataSet = [];
     _hasBeenSolved = false;
     _isFetchingDataSet = true;
     notifyListeners();
-    final dataSetsRaw = await python.generateDataSet(lowestValue, heightValue,
-        lowLength, heightLength, stepLength, onlyUniqueNumbers);
-    for (final set in dataSetsRaw) {
-      _dataSet.add(DataSet(set, heightValue));
-    }
+    _dataSet = <DataSet>[]..addGeneratedDataSets(
+        highestValue: highestValue,
+        amountIncreasePerDataSet: amountIncreasePerDataSet,
+        maxAmount: maxAmount,
+        initialAmount: initialAmount,
+        lowestValue: lowestValue,
+        onlyUniqueNumbers: onlyUniqueNumbers,
+      );
     _isFetchingDataSet = false;
     notifyListeners();
   }

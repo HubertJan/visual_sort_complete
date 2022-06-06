@@ -40,7 +40,7 @@ class SortVisualisation extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Bar(
-                        height: element / state.data.highestValue,
+                        height: element / (state.data.highestValue * 1.05),
                         status: status,
                       ),
                     ),

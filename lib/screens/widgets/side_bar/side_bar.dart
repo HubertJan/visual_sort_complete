@@ -3,10 +3,10 @@ import 'package:provider/provider.dart';
 
 import 'package:pysort_flutter/providers/result_state.dart';
 import 'package:pysort_flutter/providers/sort_config_state.dart';
-import 'package:pysort_flutter/side_bar/widgets/algorithm_list_item.dart';
-import 'package:pysort_flutter/side_bar/widgets/data_setup.dart';
+import 'package:pysort_flutter/sort_tools/supported_sort_algorithms.dart';
 
-import '../services/python_binder.dart' as python;
+import './widgets/algorithm_list_item.dart';
+import 'widgets/data_setup.dart';
 import 'widgets/side_bar_title_bar.dart';
 
 class SideBar extends StatelessWidget {
@@ -68,22 +68,23 @@ class SideBar extends StatelessWidget {
                 builder: (ctx, state, _) {
                   return ListView.builder(
                     itemBuilder: (ctx, i) {
-                      final alg = python.supportedAlgorithms.keys.toList()[i];
-                      final isSelected = state.isAlgorithmSelected(alg);
+                      final algorithm = supportedAlgorithms[i];
+                      final isSelected =
+                          state.isAlgorithmSelected(algorithm.name);
                       return AlgorithmListItem(
                         isSelected: isSelected,
-                        title: alg,
-                        description: python.supportedAlgorithms[alg] ?? "",
+                        title: algorithm.name,
+                        description: algorithm.description,
                         onClick: !isSelected
                             ? () {
-                                state.selectAlgorithm(alg);
+                                state.selectAlgorithm(algorithm.name);
                               }
                             : () {
-                                state.deselectAlgorithm(alg);
+                                state.deselectAlgorithm(algorithm.name);
                               },
                       );
                     },
-                    itemCount: python.supportedAlgorithms.length,
+                    itemCount: supportedAlgorithms.length,
                   );
                 },
               ),

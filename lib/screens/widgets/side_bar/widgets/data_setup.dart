@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pysort_flutter/providers/sort_config_state.dart';
-import 'package:pysort_flutter/side_bar/widgets/data_input_field.dart';
 
+import 'data_input_field.dart';
 import 'side_bar_title_bar.dart';
 
 class DatasetSetup extends StatefulWidget {
@@ -15,18 +15,18 @@ class DatasetSetup extends StatefulWidget {
 }
 
 class _DatasetSetupState extends State<DatasetSetup> {
-  int minNumber = 0;
-  int maxNumber = 100;
-  int minNumberOfElements = 100;
-  int maxNumberOfElements = 1000;
+  int minValue = 0;
+  int maxValue = 100;
+  int minAmountOfElements = 100;
+  int maxAmountOfElements = 1000;
 
   bool onlyUniqueNumbers = false;
 
   bool get _canGenerateDataSet {
-    return maxNumber != 0 &&
-        minNumber != maxNumber &&
-        minNumberOfElements != 0 &&
-        (!onlyUniqueNumbers || maxNumberOfElements < maxNumber + 1 - minNumber);
+    return maxValue != 0 &&
+        minValue != maxValue &&
+        minAmountOfElements != 0 &&
+        (!onlyUniqueNumbers || maxAmountOfElements < maxValue + 1 - minValue);
   }
 
   @override
@@ -61,49 +61,49 @@ class _DatasetSetupState extends State<DatasetSetup> {
                         "Anzahl an Elementen:",
                         textAlign: TextAlign.start,
                       ),
-                      Text(" $minNumberOfElements bis $maxNumberOfElements"),
+                      Text(" $minAmountOfElements bis $maxAmountOfElements"),
                       RangeSlider(
                         min: 100,
                         max: 1000,
                         divisions: 9,
                         onChanged: (v) {
-                          minNumberOfElements = v.start.ceil();
-                          maxNumberOfElements = v.end.ceil();
+                          minAmountOfElements = v.start.ceil();
+                          maxAmountOfElements = v.end.ceil();
                           setState(() {});
                         },
-                        values: RangeValues(minNumberOfElements.toDouble(),
-                            maxNumberOfElements.toDouble()),
+                        values: RangeValues(minAmountOfElements.toDouble(),
+                            maxAmountOfElements.toDouble()),
                       ),
                       const SizedBox(
                         height: 16,
                       ),
-                      Text("Niedrigste Zahl: $minNumber"),
+                      Text("Niedrigste Zahl: $minValue"),
                       Slider(
-                        max: maxNumber.toDouble(),
+                        max: maxValue.toDouble(),
                         divisions: 1000,
-                        label: minNumber.toString(),
+                        label: minValue.toString(),
                         onChanged: (v) {
-                          minNumber = (v).toInt();
+                          minValue = (v).toInt();
                           setState(() {});
                         },
-                        value: minNumber.toDouble(),
+                        value: minValue.toDouble(),
                       ),
                       const SizedBox(
                         height: 16,
                       ),
-                      Text("Höchste Zahl: $maxNumber"),
+                      Text("Höchste Zahl: $maxValue"),
                       Slider(
                         max: 1000,
                         divisions: 100,
-                        label: maxNumber.toString(),
+                        label: maxValue.toString(),
                         onChanged: (v) {
-                          maxNumber = (v).toInt();
-                          if (minNumber > maxNumber) {
-                            minNumber = maxNumber;
+                          maxValue = (v).toInt();
+                          if (minValue > maxValue) {
+                            minValue = maxValue;
                           }
                           setState(() {});
                         },
-                        value: maxNumber.toDouble(),
+                        value: maxValue.toDouble(),
                       ),
                       const SizedBox(
                         height: 16,
@@ -134,12 +134,13 @@ class _DatasetSetupState extends State<DatasetSetup> {
                                   await Provider.of<SortConfig>(context,
                                           listen: false)
                                       .generateDataSet(
-                                          minNumber,
-                                          maxNumber,
-                                          minNumberOfElements,
-                                          maxNumberOfElements,
-                                          100,
-                                          onlyUniqueNumbers);
+                                    initialAmount: minAmountOfElements,
+                                    maxAmount: maxAmountOfElements,
+                                    amountIncreasePerDataSet: 100,
+                                    lowestValue: minValue,
+                                    highestValue: maxValue,
+                                    onlyUniqueNumbers: onlyUniqueNumbers,
+                                  );
                                 }
                               : null,
                         ),
