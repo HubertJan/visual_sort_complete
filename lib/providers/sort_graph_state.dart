@@ -14,6 +14,10 @@ class SortGraphState extends ChangeNotifier {
     return _steps.length > _currentStep ? _steps[_currentStep] : null;
   }
 
+  List<AlgorithmStep> get steps {
+    return [..._steps];
+  }
+
   bool get isLastStep {
     return currentStepIndex == _steps.length;
   }

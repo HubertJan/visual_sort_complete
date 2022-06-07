@@ -22,21 +22,10 @@ class SortVisualisation extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 itemBuilder: (ctx, index) {
                   final element = state.elementList[index];
-                  final BarStatus status;
-                  final statusCode = state.currentStep?.getBarStatusOf(index);
-                  switch (statusCode) {
-                    case 20:
-                    case 21:
-                    case 11:
-                      status = BarStatus.selected;
-                      break;
-                    case 10:
-                      status = BarStatus.willBeMoved;
-                      break;
-                    default:
-                      status = BarStatus.none;
-                      break;
-                  }
+                  final status =
+                      state.currentStep?.getBarStatusOf(index)?.toBarStatus() ??
+                          BarStatus.none;
+
                   return Flexible(
                     flex: 1,
                     child: Align(
@@ -67,24 +56,101 @@ class SortVisualisation extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("Schritt: ${state.currentStepIndex}"),
+                const SizedBox(
+                  height: 16,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 64,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                              "${(state.currentStepIndex / state.steps.length * 100).toStringAsFixed(2)}%"),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 16,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.onSurface,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          alignment: Alignment.centerLeft,
+                          child: FractionallySizedBox(
+                            heightFactor: 1,
+                            widthFactor:
+                                state.currentStepIndex / state.steps.length,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.primary,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      /*               SizedBox(
+                        width: 8,
+                      ),
+                      Container(
+                        width: 64,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "${state.steps.length}",
+                          ),
+                        ),
+                      ), */
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    TextButton(
-                      child: const Text("Zurück"),
-                      onPressed: state.canPrevious
-                          ? () {
-                              state.previousStep();
-                            }
-                          : null,
+                    Container(
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.skip_previous,
+                        ),
+                        iconSize: 32,
+                        color: Theme.of(context).colorScheme.onSurface,
+                        disabledColor: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(0.3),
+                        onPressed: state.canPrevious
+                            ? () {
+                                state.previousStep();
+                              }
+                            : null,
+                      ),
                     ),
                     !state.isAutoPlay
                         ? Column(
                             children: [
                               TextButton(
-                                child: const Text("Automatisch rückwärts"),
+                                style: ButtonStyle(
+                                  foregroundColor: MaterialStateProperty.all(
+                                      Theme.of(context).colorScheme.onSurface),
+                                ),
+                                child: Row(
+                                  children: const [
+                                    Text("Auto"),
+                                    Icon(Icons.play_circle),
+                                  ],
+                                ),
                                 onPressed: state.canPrevious
                                     ? () {
                                         state.startAutoPlay(
@@ -94,8 +160,20 @@ class SortVisualisation extends StatelessWidget {
                                       }
                                     : null,
                               ),
+                              SizedBox(
+                                height: 8,
+                              ),
                               TextButton(
-                                child: const Text("Automatisch vorwärts"),
+                                style: ButtonStyle(
+                                  foregroundColor: MaterialStateProperty.all(
+                                      Theme.of(context).colorScheme.onSurface),
+                                ),
+                                child: Row(
+                                  children: const [
+                                    Text("Auto"),
+                                    Icon(Icons.play_circle),
+                                  ],
+                                ),
                                 onPressed: state.canNext
                                     ? () {
                                         state.startAutoPlay(
@@ -107,14 +185,30 @@ class SortVisualisation extends StatelessWidget {
                               ),
                             ],
                           )
-                        : TextButton(
-                            child: const Text("Stoppen"),
+                        : IconButton(
+                            icon: const Icon(
+                              Icons.stop,
+                            ),
+                            iconSize: 32,
+                            color: Theme.of(context).colorScheme.onSurface,
+                            disabledColor: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(0.3),
                             onPressed: () {
                               state.stopAutoPlay();
                             },
                           ),
-                    TextButton(
-                      child: const Text("Nächster"),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.skip_next,
+                      ),
+                      iconSize: 32,
+                      color: Theme.of(context).colorScheme.onSurface,
+                      disabledColor: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.3),
                       onPressed: state.canNext
                           ? () {
                               state.nextStep();
@@ -133,6 +227,19 @@ class SortVisualisation extends StatelessWidget {
 }
 
 enum BarStatus { none, selected, willBeMoved }
+
+extension _BarStatusConverter on int {
+  BarStatus toBarStatus() {
+    switch (this) {
+      case 11:
+        return BarStatus.selected;
+      case 10:
+        return BarStatus.willBeMoved;
+      default:
+        return BarStatus.none;
+    }
+  }
+}
 
 class Bar extends StatelessWidget {
   final double height;
