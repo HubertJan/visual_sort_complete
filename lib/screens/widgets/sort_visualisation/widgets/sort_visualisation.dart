@@ -19,6 +19,7 @@ class SortVisualisation extends StatelessWidget {
             child: Container(
               color: Theme.of(context).colorScheme.surface,
               child: RowBuilder(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 itemBuilder: (ctx, index) {
                   final element = state.elementList[index];
                   final BarStatus status;
@@ -36,7 +37,8 @@ class SortVisualisation extends StatelessWidget {
                       status = BarStatus.none;
                       break;
                   }
-                  return Expanded(
+                  return Flexible(
+                    flex: 1,
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Bar(
@@ -156,7 +158,6 @@ class Bar extends StatelessWidget {
     return FractionallySizedBox(
       heightFactor: height,
       child: Container(
-        width: 100,
         color: color,
       ),
     );
@@ -186,6 +187,11 @@ class RowBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: crossAxisAlignment,
+      mainAxisAlignment: mainAxisAlignment,
+      mainAxisSize: mainAxisSize,
+      verticalDirection: verticalDirection,
+      textDirection: textDirection,
       children: List.generate(itemCount, (index) => itemBuilder(context, index))
           .toList(),
     );
