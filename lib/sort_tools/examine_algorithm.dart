@@ -7,14 +7,14 @@ import 'supported_sort_algorithms.dart';
 
 extension Examine on AlgorithmData {
   /// Only calculate and returns [AlgorithmStep]s for smallest [DataSet].
-  AlgorithmExaminationResult examineAlgorithm({
-    required List<DataSet> dataSets,
-  }) {
+  Future<AlgorithmExaminationResult> examineAlgorithm(
+    List<DataSet> dataSets,
+  ) async {
     final runtimeResults = <String, Duration>{};
     for (final set in dataSets) {
       Duration totalRuntime = Duration.zero;
       int iterations = 0;
-      while (totalRuntime < const Duration(seconds: 3) && iterations <= 10) {
+      while (totalRuntime < const Duration(seconds: 3) && iterations <= 100) {
         iterations += 1;
         final runtime = (() => sort(set.data)).callAndMeasureRuntime().runtime;
         totalRuntime = totalRuntime + runtime;

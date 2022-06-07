@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pysort_flutter/model/algorithm_examination_result.dart';
 import 'package:pysort_flutter/model/data_set.dart';
 import 'package:pysort_flutter/sort_tools/examine_algorithm.dart';
@@ -35,7 +36,8 @@ class ResultsState extends ChangeNotifier {
       final algorithm = supportedAlgorithms
           .firstWhere((element) => element.name == algorithmName);
 
-      results[algorithm.name] = algorithm.examineAlgorithm(dataSets: dataSets);
+      results[algorithm.name] =
+          await compute(algorithm.examineAlgorithm, dataSets);
     }
     _algorithnmNameToResults.clear();
     _algorithnmNameToResults.addAll(results);
