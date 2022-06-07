@@ -9,6 +9,7 @@
 
 import 'package:pysort_flutter/model/algorithm_step.dart';
 import 'package:pysort_flutter/sort_tools/sort_algorithms/bubble_sort.dart';
+import 'package:pysort_flutter/sort_tools/sort_algorithms/selection_sort.dart';
 
 final _supportedAlgorithms = [
   AlgorithmData(
@@ -26,7 +27,23 @@ final _supportedAlgorithms = [
         steps: steps,
       );
     },
-  )
+  ),
+  AlgorithmData(
+    name: "Selectionsort",
+    description: "Der Klassiker",
+    sort: (list) {
+      final sorted = [...list]..selectionSort();
+      return sorted;
+    },
+    sortWithAnalyzation: (list) {
+      final sorted = [...list];
+      final steps = sorted.selectionSortWithAnalyzation();
+      return SortedWithAnalyzation(
+        sorted: sorted,
+        steps: steps,
+      );
+    },
+  ),
 ];
 
 class SortedWithAnalyzation {
