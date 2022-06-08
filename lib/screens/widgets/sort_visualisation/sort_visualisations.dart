@@ -4,9 +4,9 @@ import 'package:pysort_flutter/providers/result_state.dart';
 import 'package:pysort_flutter/providers/sort_graph_state.dart';
 import 'package:tabbed_view/tabbed_view.dart';
 
-import 'widgets/bars.dart';
-import 'widgets/side_bar.dart';
-import 'widgets/sort_visualisation_tabbed_view.dart';
+import 'widgets/visualisation_bars.dart';
+import 'widgets/visualisation_side_bar.dart';
+import 'widgets/visualisation_tabbed_view.dart';
 
 class SortVisualisations extends StatelessWidget {
   const SortVisualisations({Key? key}) : super(key: key);
@@ -24,8 +24,8 @@ class SortVisualisations extends StatelessWidget {
               builder: (ctx, _) {
                 return Row(
                   children: const [
-                    Bars(),
-                    SideBar(),
+                    VisualisationBars(),
+                    VisualisationSideBar(),
                   ],
                 );
                 ;
@@ -36,7 +36,7 @@ class SortVisualisations extends StatelessWidget {
           ),
         );
       }
-      return SortVisualisationTabbedView(tabs: tabs);
+      return VisualisationTabbedView(tabs: tabs);
     });
   }
 }

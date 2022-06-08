@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:pysort_flutter/providers/sort_graph_state.dart';
 import 'package:pysort_flutter/widgets/row_builder.dart';
 
-class Bars extends StatelessWidget {
-  const Bars({
+class VisualisationBars extends StatelessWidget {
+  const VisualisationBars({
     Key? key,
   }) : super(key: key);
 
