@@ -18,10 +18,22 @@ class SortVisualisations extends StatelessWidget {
       for (int i = 0; i < results.sortResults.entries.length; i += 1) {
         tabs.add(
           TabData(
-              text: results.sortResults.entries.toList()[i].key,
-              content: SortGraphStateProvider(resultStateIndex: i),
-              keepAlive: true,
-              closable: false),
+            text: results.sortResults.entries.toList()[i].key,
+            content: SortGraphStateByResultStateProvider(
+              resultStateIndex: i,
+              builder: (ctx, _) {
+                return Row(
+                  children: const [
+                    Bars(),
+                    SideBar(),
+                  ],
+                );
+                ;
+              },
+            ),
+            keepAlive: true,
+            closable: false,
+          ),
         );
       }
       return SortVisualisationTabbedView(tabs: tabs);
@@ -29,11 +41,15 @@ class SortVisualisations extends StatelessWidget {
   }
 }
 
-class SortGraphStateProvider extends StatelessWidget {
+class SortGraphStateByResultStateProvider extends StatelessWidget {
   final int resultStateIndex;
+  final Widget Function(BuildContext, Widget?)? builder;
 
-  const SortGraphStateProvider({Key? key, required this.resultStateIndex})
-      : super(key: key);
+  const SortGraphStateByResultStateProvider({
+    Key? key,
+    required this.resultStateIndex,
+    this.builder,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,15 +73,7 @@ class SortGraphStateProvider extends StatelessWidget {
             data: results.dataSets.firstWhere(
                 (element) => element.id == res.sortStepsPerDataSet.keys.first));
       },
-      builder: (ctx, _) {
-        return Row(
-          children: const [
-            Bars(),
-            SideBar(),
-          ],
-        );
-        ;
-      },
+      builder: builder,
     );
   }
 }
