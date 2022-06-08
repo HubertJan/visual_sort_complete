@@ -4,7 +4,8 @@ import 'package:pysort_flutter/providers/result_state.dart';
 import 'package:pysort_flutter/providers/sort_graph_state.dart';
 import 'package:tabbed_view/tabbed_view.dart';
 
-import 'widgets/sort_visualisation.dart';
+import 'widgets/bars.dart';
+import 'widgets/side_bar.dart';
 import 'widgets/sort_visualisation_tabbed_view.dart';
 
 class SortVisualisations extends StatelessWidget {
@@ -57,7 +58,13 @@ class SortGraphStateProvider extends StatelessWidget {
                 (element) => element.id == res.sortStepsPerDataSet.keys.first));
       },
       builder: (ctx, _) {
-        return const SortVisualisation();
+        return Row(
+          children: const [
+            Bars(),
+            SideBar(),
+          ],
+        );
+        ;
       },
     );
   }
