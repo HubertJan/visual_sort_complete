@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pysort_flutter/model/data_set.dart';
 import 'package:pysort_flutter/providers/result_state.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class BarGraphVisualisation extends StatefulWidget {
   const BarGraphVisualisation({Key? key}) : super(key: key);
@@ -33,9 +32,7 @@ class _BarGraphVisualisationState extends State<BarGraphVisualisation> {
 
       return Container(
         padding: const EdgeInsets.all(32),
-        color: Theme.of(context)
-            .colorScheme
-            .surface, //Theme.of(context).colorScheme.background,
+        color: Theme.of(context).colorScheme.surface,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -44,14 +41,17 @@ class _BarGraphVisualisationState extends State<BarGraphVisualisation> {
               padding: const EdgeInsets.only(top: 32.0),
               child: Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,
-                /*             mainAxisAlignment: MainAxisAlignment.center, */
+                alignment: WrapAlignment.start,
                 children: [
                   Text(
-                    "Laufzeit bei ",
+                    "Laufzeit bei",
                     style: Theme.of(context)
                         .textTheme
                         .headline3!
                         .copyWith(color: Colors.white),
+                  ),
+                  const SizedBox(
+                    width: 16,
                   ),
                   Container(
                     decoration: BoxDecoration(
@@ -64,7 +64,6 @@ class _BarGraphVisualisationState extends State<BarGraphVisualisation> {
                       child: DropdownButton<String>(
                         itemHeight: 64,
                         alignment: Alignment.topLeft,
-                        /*      iconSize: 0, */
                         iconEnabledColor:
                             Theme.of(context).colorScheme.onBackground,
                         underline: const SizedBox(),
@@ -91,8 +90,11 @@ class _BarGraphVisualisationState extends State<BarGraphVisualisation> {
                       ),
                     ),
                   ),
+                  const SizedBox(
+                    width: 16,
+                  ),
                   Text(
-                    " Elementen",
+                    "Elementen",
                     style: Theme.of(context)
                         .textTheme
                         .headline3!
@@ -108,17 +110,12 @@ class _BarGraphVisualisationState extends State<BarGraphVisualisation> {
                   itemCount: state.sortResults.length,
                   itemBuilder: (context, i) {
                     final result = state.sortResults.entries.toList()[i];
-                    return LayoutBuilder(
-                      builder: (context, constraints) {
-                        final runtime = result
-                            .value.runtimePerDataSet[_currentDataSet!.id]!;
-                        return RuntimeBar(
-                          name: result.key,
-                          runtime: runtime,
-                          maxRuntime: maxRuntime,
-                          hasTextInBar: constraints.maxWidth < 800,
-                        );
-                      },
+                    final runtime =
+                        result.value.runtimePerDataSet[_currentDataSet!.id]!;
+                    return RuntimeBar(
+                      name: result.key,
+                      runtime: runtime,
+                      maxRuntime: maxRuntime,
                     );
                   },
                 ),
@@ -135,88 +132,97 @@ class RuntimeBar extends StatelessWidget {
   final Duration maxRuntime;
   final String name;
   final Duration runtime;
-  final bool hasTextInBar;
-
-  const RuntimeBar(
-      {Key? key,
-      required this.maxRuntime,
-      required this.name,
-      required this.runtime,
-      this.hasTextInBar = false})
-      : super(key: key);
+  const RuntimeBar({
+    Key? key,
+    required this.maxRuntime,
+    required this.name,
+    required this.runtime,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final runtimeInMilliseconds = runtime.inMicroseconds / 1000;
     final width = runtime.inMicroseconds / maxRuntime.inMicroseconds;
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 8.0,
-        horizontal: 16,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            flex: 3,
-            child: FractionallySizedBox(
-              alignment: Alignment.centerLeft,
-              widthFactor: width,
-              child: Container(
-                height: 50,
-                color: Colors.yellow,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: hasTextInBar
-                    ? Row(
-                        children: [
-                          Text(name,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary)),
-                          Text("$runtimeInMilliseconds ms",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary)),
-                        ],
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      )
-                    : null,
-              ),
-            ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final hasTextInBar = constraints.maxWidth < 1000;
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 8.0,
+            horizontal: 16,
           ),
-          if (!hasTextInBar)
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Flexible(
-                    child: Text(
-                      "$runtimeInMilliseconds ms",
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline6,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 3,
+                child: Stack(
+                  children: [
+                    FractionallySizedBox(
+                      alignment: Alignment.centerLeft,
+                      widthFactor: width,
+                      child: Container(
+                        height: 50,
+                        color: Theme.of(context).colorScheme.secondary,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  Flexible(
-                    child: Text(name,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.headline5),
-                  ),
-                ],
+                    if (hasTextInBar)
+                      Container(
+                        height: 50,
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        child: Row(
+                          children: [
+                            Text(name,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6
+                                    ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary)),
+                            Text("$runtimeInMilliseconds ms",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6
+                                    ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary)),
+                          ],
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        ),
+                      ),
+                  ],
+                ),
               ),
-            ),
-        ],
-      ),
+              if (!hasTextInBar)
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          "$runtimeInMilliseconds ms",
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Flexible(
+                        child: Text(name,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.headline5),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

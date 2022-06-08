@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pysort_flutter/providers/result_state.dart';
+import 'package:pysort_flutter/widgets/tabbed_view_page.dart';
 
 import 'package:tabbed_view/tabbed_view.dart';
 
-import '../sort_visualisation/widgets/sort_visualisation_tabbed_view.dart';
 import 'widgets/bar_graph_visualisation.dart';
 import 'widgets/line_diagram_visualisation.dart';
 
@@ -32,7 +32,7 @@ class RuntimeVisualisations extends StatelessWidget {
         );
       }
 
-      return SortVisualisationTabbedView(tabs: tabs);
+      return TabbedViewPage(tabs: tabs);
     });
   }
 }

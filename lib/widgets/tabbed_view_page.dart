@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:tabbed_view/tabbed_view.dart';
 
-class VisualisationTabbedView extends StatefulWidget {
+class TabbedViewPage extends StatefulWidget {
   final List<TabData> tabs;
 
-  const VisualisationTabbedView({Key? key, required this.tabs})
-      : super(key: key);
+  const TabbedViewPage({Key? key, required this.tabs}) : super(key: key);
 
   @override
-  _VisualisationTabbedViewState createState() =>
-      _VisualisationTabbedViewState();
+  _TabbedViewPageState createState() => _TabbedViewPageState();
 }
 
-class _VisualisationTabbedViewState extends State<VisualisationTabbedView> {
+class _TabbedViewPageState extends State<TabbedViewPage> {
   late TabbedViewController _controller;
 
   @override
-  void didUpdateWidget(VisualisationTabbedView oldWidget) {
+  void didUpdateWidget(TabbedViewPage oldWidget) {
     _init();
     super.didUpdateWidget(oldWidget);
   }

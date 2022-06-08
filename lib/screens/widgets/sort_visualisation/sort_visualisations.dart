@@ -6,7 +6,7 @@ import 'package:tabbed_view/tabbed_view.dart';
 
 import 'widgets/visualisation_bars.dart';
 import 'widgets/visualisation_side_bar.dart';
-import 'widgets/visualisation_tabbed_view.dart';
+import '../../../widgets/tabbed_view_page.dart';
 
 class SortVisualisations extends StatelessWidget {
   const SortVisualisations({Key? key}) : super(key: key);
@@ -36,7 +36,7 @@ class SortVisualisations extends StatelessWidget {
           ),
         );
       }
-      return VisualisationTabbedView(tabs: tabs);
+      return TabbedViewPage(tabs: tabs);
     });
   }
 }
