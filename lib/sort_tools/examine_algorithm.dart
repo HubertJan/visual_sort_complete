@@ -11,10 +11,11 @@ extension Examine on AlgorithmData {
     List<DataSet> dataSets,
   ) async {
     final runtimeResults = <String, Duration>{};
+    final sortStepsPerDataSet = <String, List<AlgorithmStep>>{};
     for (final set in dataSets) {
       Duration totalRuntime = Duration.zero;
       int iterations = 0;
-      while (totalRuntime < const Duration(seconds: 3) && iterations <= 100) {
+      while (totalRuntime < const Duration(seconds: 2) && iterations <= 50) {
         iterations += 1;
         final runtime = (() => sort(set.data)).callAndMeasureRuntime().runtime;
         totalRuntime = totalRuntime + runtime;
@@ -22,14 +23,12 @@ extension Examine on AlgorithmData {
       final averageRuntime =
           Duration(microseconds: totalRuntime.inMicroseconds ~/ iterations);
       runtimeResults[set.id] = averageRuntime;
+      sortStepsPerDataSet[set.id] = sortWithAnalyzation(set.data).steps;
     }
 
-    final smallestSet = dataSets.reduce((value, element) =>
-        value.highestValue > element.highestValue ? element : value);
-    final steps = sortWithAnalyzation(smallestSet.data).steps;
-
     return AlgorithmExaminationResult(
-        runtimePerDataSet: runtimeResults,
-        sortStepsPerDataSet: {smallestSet.id: steps});
+      runtimePerDataSet: runtimeResults,
+      sortStepsPerDataSet: sortStepsPerDataSet,
+    );
   }
 }

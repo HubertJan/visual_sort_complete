@@ -6,9 +6,25 @@ import 'package:pysort_flutter/model/data_set.dart';
 
 class SortGraphState extends ChangeNotifier {
   int _currentStep = 0;
-  final List<AlgorithmStep> _steps;
-  final DataSet data;
+  final Map<String, List<AlgorithmStep>> _dataSetIdToSteps;
+
+  final List<DataSet> _dataSets;
+
+  List<DataSet> get dataSets {
+    return [..._dataSets];
+  }
+
+  DataSet get currentDataSet {
+    return _dataSets
+        .firstWhere((element) => element.id == _currentSelectedDataSetId);
+  }
+
+  String _currentSelectedDataSetId;
   List<int> _elementList = [];
+
+  List<AlgorithmStep> get _steps {
+    return _dataSetIdToSteps[_currentSelectedDataSetId]!;
+  }
 
   AlgorithmStep? get currentStep {
     return _steps.length > _currentStep ? _steps[_currentStep] : null;
@@ -24,6 +40,21 @@ class SortGraphState extends ChangeNotifier {
 
   int get currentStepIndex {
     return _currentStep;
+  }
+
+  void switchDataSet(String id) {
+    if (!_dataSetIdToSteps.keys.contains(id)) {
+      throw ArgumentError("DataSet with $id does not exist in SortGraphState.");
+    }
+    _currentSelectedDataSetId = id;
+    _autoPlayTimer?.cancel();
+    _currentStep = 0;
+    _elementList = currentDataSet.data;
+    notifyListeners();
+  }
+
+  String get currentDataSetId {
+    return _currentSelectedDataSetId;
   }
 
   List<int> get elementList => _elementList;
@@ -99,7 +130,14 @@ class SortGraphState extends ChangeNotifier {
     _autoPlayTimer?.cancel();
   }
 
-  SortGraphState({required List<AlgorithmStep> steps, required this.data})
-      : _steps = steps,
-        _elementList = data.data;
+  SortGraphState(
+      {required Map<String, List<AlgorithmStep>> solveStepsPerDataSet,
+      required List<DataSet> dataSets})
+      : _dataSetIdToSteps = solveStepsPerDataSet,
+        _currentSelectedDataSetId = solveStepsPerDataSet.keys.first,
+        _dataSets = dataSets,
+        _elementList = dataSets
+            .firstWhere(
+                (element) => element.id == solveStepsPerDataSet.keys.first)
+            .data;
 }

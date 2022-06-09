@@ -31,59 +31,16 @@ class VisualisationSideBar extends StatelessWidget {
         padding: EdgeInsets.all(16),
         child: Stack(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 8,
-                ),
-                Text("Datensatz"),
-                SizedBox(
-                  height: 8,
-                ),
-                DropdownButton2<String>(
-                  isExpanded: true,
-                  itemHeight: 32,
-                  dropdownDecoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.vertical(bottom: Radius.circular(8)),
-                    color: HSLColor.fromColor(
-                            Theme.of(context).colorScheme.primary)
-                        .withLightness(0.3)
-                        .toColor(),
+            if (state.dataSets.length != 1)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  SizedBox(
+                    height: 8,
                   ),
-                  buttonPadding:
-                      EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  buttonDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.5),
-                  ),
-                  iconEnabledColor: Theme.of(context).colorScheme.onBackground,
-                  underline: const SizedBox(),
-                  buttonHeight: 32,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: Colors.white,
-                      ),
-                  value: "100",
-                  items: const [
-                    DropdownMenuItem(
-                      child: Text("mit 100 Elementen"),
-                      value: "100",
-                    ),
-                    DropdownMenuItem(
-                      child: Text("mit 200 Elementen"),
-                      value: "200",
-                    )
-                  ],
-                  onChanged: (newId) {
-                    /*   _currentDataSet =
-                    state.dataSets.firstWhere((element) => element.id == newId);
-                setState(() {}); */
-                  },
-                ),
-              ],
-            ),
+                  SelectDataSetDropdownMenu(),
+                ],
+              ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -107,5 +64,60 @@ class VisualisationSideBar extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class SelectDataSetDropdownMenu extends StatelessWidget {
+  const SelectDataSetDropdownMenu({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text("Datensatz"),
+        const SizedBox(
+          height: 8,
+        ),
+        Consumer<SortGraphState?>(builder: (ctx, state, _) {
+          if (state == null) {
+            return const SizedBox();
+          }
+          return DropdownButton2<String>(
+            isExpanded: true,
+            itemHeight: 32,
+            dropdownDecoration: BoxDecoration(
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(8)),
+              color: HSLColor.fromColor(Theme.of(context).colorScheme.primary)
+                  .withLightness(0.3)
+                  .toColor(),
+            ),
+            buttonPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            buttonDecoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+            ),
+            iconEnabledColor: Theme.of(context).colorScheme.onBackground,
+            underline: const SizedBox(),
+            buttonHeight: 32,
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: Colors.white,
+                ),
+            value: state.currentDataSetId,
+            items: state.dataSets
+                .map((set) => DropdownMenuItem(
+                      child: Text("mit ${set.data.length} Elementen"),
+                      value: set.id,
+                    ))
+                .toList(),
+            onChanged: (newId) {
+              state.switchDataSet(newId!);
+            },
+          );
+        }),
+      ],
+    );
   }
 }

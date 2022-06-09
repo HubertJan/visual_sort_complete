@@ -29,7 +29,8 @@ class VisualisationBars extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Bar(
-                    height: element / (state.data.highestValue * 1.05),
+                    height:
+                        element / (state.currentDataSet.highestValue * 1.05),
                     status: status,
                   ),
                 ),
