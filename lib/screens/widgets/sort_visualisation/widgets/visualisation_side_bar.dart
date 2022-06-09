@@ -89,14 +89,16 @@ class SelectDataSetDropdownMenu extends StatelessWidget {
             isExpanded: true,
             itemHeight: 32,
             dropdownDecoration: BoxDecoration(
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(8)),
+              borderRadius:
+                  const BorderRadius.vertical(bottom: Radius.circular(8)),
               color: HSLColor.fromColor(Theme.of(context).colorScheme.primary)
                   .withLightness(0.3)
                   .toColor(),
             ),
-            buttonPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            buttonPadding:
+                const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             buttonDecoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
               color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
             ),
             iconEnabledColor: Theme.of(context).colorScheme.onBackground,
