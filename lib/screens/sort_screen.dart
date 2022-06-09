@@ -37,6 +37,14 @@ class SortScreen extends StatelessWidget {
                   Expanded(
                     child: Consumer<ResultsState>(
                       builder: (ctx, state, _) {
+                        if (state.isFetching) {
+                          return Container(
+                            color: Theme.of(context).colorScheme.surface,
+                            child: const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
                         if (!state.hasResults) {
                           return Container(
                             color: Theme.of(context).colorScheme.surface,
@@ -65,22 +73,15 @@ class SortScreen extends StatelessWidget {
                             ),
                           );
                         }
-                        return state.isFetching
-                            ? Container(
-                                color: Theme.of(context).colorScheme.surface,
-                                child: const Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                              )
-                            : ResizableWidget(
-                                isHorizontalSeparator: true,
-                                separatorSize: 6,
-                                separatorColor: Colors.black45,
-                                children: const [
-                                  RuntimeVisualisations(),
-                                  SortVisualisations(),
-                                ],
-                              );
+                        return ResizableWidget(
+                          isHorizontalSeparator: true,
+                          separatorSize: 6,
+                          separatorColor: Colors.black45,
+                          children: const [
+                            RuntimeVisualisations(),
+                            SortVisualisations(),
+                          ],
+                        );
                       },
                     ),
                   ),
