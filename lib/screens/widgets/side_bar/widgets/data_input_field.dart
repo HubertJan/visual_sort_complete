@@ -38,9 +38,13 @@ class DateInputField extends StatelessWidget {
                     Icons.copy,
                     color: Colors.white,
                   ),
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          Colors.black.withOpacity(0.9))),
+                  style: ButtonStyle(backgroundColor:
+                      MaterialStateProperty.resolveWith((state) {
+                    if (state.contains(MaterialState.hovered)) {
+                      return Theme.of(context).colorScheme.primary;
+                    }
+                    return Colors.black.withOpacity(0.9);
+                  })),
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: text));
                   },
