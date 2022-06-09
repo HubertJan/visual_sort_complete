@@ -49,32 +49,30 @@ extension MergeSort on List<int> {
     int currentIndexLeftSection = 0;
     int currentIndexRightSection = 0;
     int currentIndexTotal = leftStartIndex;
+    final subSteps = isAnalyzing ? <AlgorithmSubStep>[] : null;
     while (currentIndexLeftSection < leftSection.length &&
         currentIndexRightSection < rightSection.length) {
       if (leftSection[currentIndexLeftSection] <=
           rightSection[currentIndexRightSection]) {
-        steps?.add(AlgorithmStep(subSteps: [
-          AlgorithmSubStep(
-              index: currentIndexTotal,
-              barType: 10,
-              beforeChangeValue: this[currentIndexTotal],
-              newValue: leftSection[currentIndexLeftSection]),
-        ]));
+        subSteps?.add(AlgorithmSubStep(
+            index: currentIndexTotal,
+            barType: 10,
+            beforeChangeValue: this[currentIndexTotal],
+            newValue: leftSection[currentIndexLeftSection]));
         this[currentIndexTotal] = leftSection[currentIndexLeftSection];
         currentIndexLeftSection++;
       } else {
-        steps?.add(AlgorithmStep(subSteps: [
-          AlgorithmSubStep(
-              index: currentIndexTotal,
-              barType: 10,
-              beforeChangeValue: this[currentIndexTotal],
-              newValue: leftSection[currentIndexLeftSection]),
-        ]));
+        subSteps?.add(AlgorithmSubStep(
+            index: currentIndexTotal,
+            barType: 10,
+            beforeChangeValue: this[currentIndexTotal],
+            newValue: leftSection[currentIndexLeftSection]));
         this[currentIndexTotal] = rightSection[currentIndexRightSection];
         currentIndexRightSection++;
       }
       currentIndexTotal++;
     }
+    steps?.add(AlgorithmStep(subSteps: subSteps!));
 
     final remainingElementsCountOfLeftSection =
         leftSection.length - currentIndexLeftSection;

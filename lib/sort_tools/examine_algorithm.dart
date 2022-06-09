@@ -15,7 +15,8 @@ extension Examine on AlgorithmData {
     for (final set in dataSets) {
       Duration totalRuntime = Duration.zero;
       int iterations = 0;
-      while (totalRuntime < const Duration(seconds: 2) && iterations <= 50) {
+      while (totalRuntime < const Duration(seconds: 2) && iterations <= 50 ||
+          iterations < 5) {
         iterations += 1;
         final runtime = (() => sort(set.data)).callAndMeasureRuntime().runtime;
         totalRuntime = totalRuntime + runtime;

@@ -32,7 +32,7 @@ final _supportedAlgorithms = [
   ),
   AlgorithmData(
     name: "Selectionsort",
-    description: "Der Klassiker",
+    description: "Ziemlich einfach",
     sort: (list) {
       final sorted = [...list]..selectionSort();
       return sorted;
@@ -48,7 +48,7 @@ final _supportedAlgorithms = [
   ),
   AlgorithmData(
     name: "Quicksort",
-    description: "Der Klassiker",
+    description: '"Schnell"sortieren',
     sort: (list) {
       final sorted = [...list]..quickSort();
       return sorted;
@@ -63,8 +63,8 @@ final _supportedAlgorithms = [
     },
   ),
   AlgorithmData(
-    name: "MergeSort",
-    description: "Der Klassiker",
+    name: "Mergesort",
+    description: "Teile und hersche",
     sort: (list) {
       final sorted = [...list]..mergeSort();
       return sorted;
