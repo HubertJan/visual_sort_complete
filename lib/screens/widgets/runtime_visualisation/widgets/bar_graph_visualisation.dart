@@ -115,6 +115,9 @@ class _BarGraphVisualisationState extends State<BarGraphVisualisation> {
                 ],
               ),
             ),
+            const SizedBox(
+              height: 16,
+            ),
             Expanded(
               child: Center(
                 child: ListView.builder(

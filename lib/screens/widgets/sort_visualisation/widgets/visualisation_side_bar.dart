@@ -61,30 +61,32 @@ class VisualisationSideBar extends StatelessWidget {
                     child: VisualisationControlButtons(),
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 32,
                   ),
                   Container(
                       alignment: Alignment.centerLeft,
                       child:
                           Text("Geschwindigkeit", textAlign: TextAlign.start)),
                   Slider(
-                    min: 5,
-                    max: 30,
-                    divisions: 25,
+                    min: 0,
+                    max: 60,
+                    divisions: 30,
                     label: () {
-                      final timeInSeconds = state.totalSortDuration.inSeconds;
-                      if (timeInSeconds < 15) {
+                      final timeInSeconds =
+                          state.durationPerStep.inMilliseconds;
+                      if (timeInSeconds < 10) {
                         return "Schnell";
-                      } else if (timeInSeconds < 25) {
+                      } else if (timeInSeconds < 20) {
                         return "Normal";
                       } else {
                         return "Langsam";
                       }
                     }(),
-                    value: (35 - state.totalSortDuration.inSeconds).toDouble(),
-                    onChanged: (timeInSeconds) {
-                      state.totalSortDuration =
-                          Duration(seconds: 35 - timeInSeconds.toInt());
+                    value:
+                        (60 - state.durationPerStep.inMilliseconds).toDouble(),
+                    onChanged: (timeInMilliseconds) {
+                      state.durationPerStep = Duration(
+                          milliseconds: 60 - timeInMilliseconds.toInt());
                     },
                   ),
                 ],
