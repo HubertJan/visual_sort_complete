@@ -60,9 +60,7 @@ class VisualisationControlButtons extends StatelessWidget {
                       ),
                       onPressed: state.canNext
                           ? () {
-                              state.startAutoPlay(
-                                delay: const Duration(milliseconds: 1),
-                              );
+                              state.startAutoPlay();
                             }
                           : null,
                     ),
@@ -96,7 +94,6 @@ class VisualisationControlButtons extends StatelessWidget {
                       onPressed: state.canPrevious
                           ? () {
                               state.startAutoPlay(
-                                delay: const Duration(milliseconds: 1),
                                 isForwards: false,
                               );
                             }

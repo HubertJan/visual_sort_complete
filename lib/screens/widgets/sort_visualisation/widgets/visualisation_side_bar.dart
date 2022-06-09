@@ -41,24 +41,54 @@ class VisualisationSideBar extends StatelessWidget {
                   SelectDataSetDropdownMenu(),
                 ],
               ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 16,
-                ),
-                ProgresssBar(
-                  currentValue: state.currentStepIndex,
-                  maxValue: state.steps.length,
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                const SizedBox(
-                  height: 64,
-                  child: VisualisationControlButtons(),
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ProgresssBar(
+                    currentValue: state.currentStepIndex,
+                    maxValue: state.steps.length,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  const SizedBox(
+                    height: 64,
+                    child: VisualisationControlButtons(),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Container(
+                      alignment: Alignment.centerLeft,
+                      child:
+                          Text("Geschwindigkeit", textAlign: TextAlign.start)),
+                  Slider(
+                    min: 5,
+                    max: 30,
+                    divisions: 25,
+                    label: () {
+                      final timeInSeconds = state.totalSortDuration.inSeconds;
+                      if (timeInSeconds < 15) {
+                        return "Schnell";
+                      } else if (timeInSeconds < 25) {
+                        return "Normal";
+                      } else {
+                        return "Langsam";
+                      }
+                    }(),
+                    value: (35 - state.totalSortDuration.inSeconds).toDouble(),
+                    onChanged: (timeInSeconds) {
+                      state.totalSortDuration =
+                          Duration(seconds: 35 - timeInSeconds.toInt());
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),

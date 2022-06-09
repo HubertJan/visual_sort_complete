@@ -7,6 +7,28 @@ import 'package:pysort_flutter/model/data_set.dart';
 class SortGraphState extends ChangeNotifier {
   int _currentStep = 0;
   final Map<String, List<AlgorithmStep>> _dataSetIdToSteps;
+  Duration _totalSortDuration = Duration(seconds: 30);
+  bool? _isAutoPlayForward;
+
+// TODO: Buggy. Total Sort Duration does not equal the execution time.
+  set totalSortDuration(Duration time) {
+    _totalSortDuration = time;
+    if (isAutoPlay) {
+      _autoPlayTimer!.cancel();
+      startAutoPlay(isForwards: _isAutoPlayForward!);
+    }
+    notifyListeners();
+  }
+
+  Duration get totalSortDuration {
+    return _totalSortDuration;
+  }
+
+  Duration get _durationPerStep {
+    return Duration(
+      microseconds: (_totalSortDuration.inMicroseconds / steps.length).ceil(),
+    );
+  }
 
   final List<DataSet> _dataSets;
 
@@ -93,13 +115,14 @@ class SortGraphState extends ChangeNotifier {
     _autoPlayTimer?.cancel();
   }
 
-  void startAutoPlay(
-      {Duration delay = const Duration(seconds: 1), bool isForwards = true}) {
+  void startAutoPlay({bool isForwards = true}) {
     if (isAutoPlay == true) {
       return;
     }
+    _isAutoPlayForward = isForwards;
+    print(_durationPerStep.inMicroseconds);
     _autoPlayTimer = Timer.periodic(
-      delay,
+      _durationPerStep,
       (Timer timer) {
         if (isForwards) {
           if (isLastStep) {
