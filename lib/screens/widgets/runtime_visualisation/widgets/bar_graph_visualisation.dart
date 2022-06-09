@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pysort_flutter/model/data_set.dart';
@@ -61,23 +62,33 @@ class _BarGraphVisualisationState extends State<BarGraphVisualisation> {
                     ),
                     child: ButtonTheme(
                       alignedDropdown: true,
-                      child: DropdownButton<String>(
+                      child: DropdownButton2<String>(
                         itemHeight: 64,
-                        alignment: Alignment.topLeft,
+                        alignment: Alignment.centerRight,
                         iconEnabledColor:
                             Theme.of(context).colorScheme.onBackground,
                         underline: const SizedBox(),
-                        dropdownColor: Theme.of(context).colorScheme.background,
+                        buttonDecoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(4)),
+                        ),
+                        dropdownOverButton: false,
+                        dropdownDecoration: BoxDecoration(
+                          color: HSLColor.fromColor(
+                                  Theme.of(context).colorScheme.primary)
+                              .withLightness(0.3)
+                              .toColor(),
+                        ),
                         style: Theme.of(context).textTheme.headline3!.copyWith(
                               color: Colors.white,
                             ),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4)),
                         value: _currentDataSet!.id,
                         items: state.dataSets
                             .map(
                               (set) => DropdownMenuItem(
-                                child: Text("${set.data.length}"),
+                                child: Text("${set.data.length}",
+                                    textAlign: TextAlign.end),
                                 value: set.id,
                               ),
                             )
