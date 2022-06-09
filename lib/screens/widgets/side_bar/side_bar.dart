@@ -40,6 +40,7 @@ class SideBar extends StatelessWidget {
                       ? ElevatedButton(
                           child: const Icon(
                             Icons.play_arrow,
+                            color: Colors.white,
                           ),
                           onPressed: Provider.of<SortConfig>(context).isComplete
                               ? () async {
