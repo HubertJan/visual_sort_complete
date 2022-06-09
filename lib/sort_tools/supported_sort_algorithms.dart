@@ -9,9 +9,11 @@
 
 import 'package:pysort_flutter/model/algorithm_step.dart';
 import 'package:pysort_flutter/sort_tools/sort_algorithms/bubble_sort.dart';
+import 'package:pysort_flutter/sort_tools/sort_algorithms/heap_sort.dart';
 import 'package:pysort_flutter/sort_tools/sort_algorithms/merge_sort.dart';
 import 'package:pysort_flutter/sort_tools/sort_algorithms/quick_sort.dart';
 import 'package:pysort_flutter/sort_tools/sort_algorithms/selection_sort.dart';
+import 'package:pysort_flutter/sort_tools/sort_algorithms/shell_sort.dart';
 
 final _supportedAlgorithms = [
   AlgorithmData(
@@ -72,6 +74,38 @@ final _supportedAlgorithms = [
     sortWithAnalyzation: (list) {
       final sorted = [...list];
       final steps = sorted.mergeSortAndCalculateSteps();
+      return SortedWithAnalyzation(
+        sorted: sorted,
+        steps: steps,
+      );
+    },
+  ),
+  AlgorithmData(
+    name: "Shellsort",
+    description: "Sieht cool aus",
+    sort: (list) {
+      final sorted = [...list]..shellSort();
+      return sorted;
+    },
+    sortWithAnalyzation: (list) {
+      final sorted = [...list];
+      final steps = sorted.shellSortAndCalculateSteps();
+      return SortedWithAnalyzation(
+        sorted: sorted,
+        steps: steps,
+      );
+    },
+  ),
+  AlgorithmData(
+    name: "Heapsort",
+    description: "Besseres Selectionsort",
+    sort: (list) {
+      final sorted = [...list]..heapSort();
+      return sorted;
+    },
+    sortWithAnalyzation: (list) {
+      final sorted = [...list];
+      final steps = sorted.heapSortAndCalculateSteps();
       return SortedWithAnalyzation(
         sorted: sorted,
         steps: steps,
