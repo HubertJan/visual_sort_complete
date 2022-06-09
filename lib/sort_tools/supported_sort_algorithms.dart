@@ -9,6 +9,7 @@
 
 import 'package:pysort_flutter/model/algorithm_step.dart';
 import 'package:pysort_flutter/sort_tools/sort_algorithms/bubble_sort.dart';
+import 'package:pysort_flutter/sort_tools/sort_algorithms/merge_sort.dart';
 import 'package:pysort_flutter/sort_tools/sort_algorithms/quick_sort.dart';
 import 'package:pysort_flutter/sort_tools/sort_algorithms/selection_sort.dart';
 
@@ -55,6 +56,22 @@ final _supportedAlgorithms = [
     sortWithAnalyzation: (list) {
       final sorted = [...list];
       final steps = sorted.quickSortWithAnalyzation();
+      return SortedWithAnalyzation(
+        sorted: sorted,
+        steps: steps,
+      );
+    },
+  ),
+  AlgorithmData(
+    name: "MergeSort",
+    description: "Der Klassiker",
+    sort: (list) {
+      final sorted = [...list]..mergeSort();
+      return sorted;
+    },
+    sortWithAnalyzation: (list) {
+      final sorted = [...list];
+      final steps = sorted.mergeSortAndCalculateSteps();
       return SortedWithAnalyzation(
         sorted: sorted,
         steps: steps,
