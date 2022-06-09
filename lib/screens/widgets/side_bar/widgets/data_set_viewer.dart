@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class DateInputField extends StatelessWidget {
+class DateSetViewer extends StatelessWidget {
   final String text;
-  const DateInputField({
+  const DateSetViewer({
     Key? key,
     required this.text,
   }) : super(key: key);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pysort_flutter/providers/sort_config_state.dart';
 
-import 'data_input_field.dart';
+import 'data_set_viewer.dart';
 import 'side_bar_title_bar.dart';
 
 class DatasetSetup extends StatefulWidget {
@@ -46,7 +46,7 @@ class _DatasetSetupState extends State<DatasetSetup> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              child: DateInputField(text: text),
+              child: DateSetViewer(text: text),
             ),
             Expanded(
               child: SizedBox(
