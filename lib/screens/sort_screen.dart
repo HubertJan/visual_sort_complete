@@ -56,12 +56,12 @@ class SortScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Visual Sort Complete",
+                                      "VisualSort Complete",
                                       style:
                                           Theme.of(context).textTheme.headline2,
                                     ),
                                     Text(
-                                      "Python Sortiervisualisierung",
+                                      "Flutter Sortiervisualisierung",
                                       style: Theme.of(context)
                                           .textTheme
                                           .headline4!

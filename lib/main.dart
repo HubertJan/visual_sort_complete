@@ -12,7 +12,7 @@ void main() {
     win.minSize = initialSize;
     win.size = initialSize;
     win.alignment = Alignment.center;
-    win.title = "Custom window with Flutter";
+    win.title = "VisualSort Complete";
 
     win.show();
     win.maximize();
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       ],
       builder: (context, _) {
         return MaterialApp(
-          title: 'Flutter Demo',
+          title: 'VisualSort Complete',
           theme: ThemeData(
             textTheme: Typography().white,
             primarySwatch: Colors.blue,
