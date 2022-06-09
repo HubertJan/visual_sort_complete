@@ -74,9 +74,9 @@ class VisualisationSideBar extends StatelessWidget {
                     label: () {
                       final timeInSeconds =
                           state.durationPerStep.inMilliseconds;
-                      if (timeInSeconds < 10) {
+                      if (timeInSeconds < 20) {
                         return "Schnell";
-                      } else if (timeInSeconds < 20) {
+                      } else if (timeInSeconds < 40) {
                         return "Normal";
                       } else {
                         return "Langsam";
