@@ -66,7 +66,7 @@ extension MergeSort on List<int> {
             index: currentIndexTotal,
             barType: 10,
             beforeChangeValue: this[currentIndexTotal],
-            newValue: leftSection[currentIndexLeftSection]));
+            newValue: rightSection[currentIndexRightSection]));
         this[currentIndexTotal] = rightSection[currentIndexRightSection];
         currentIndexRightSection++;
       }
