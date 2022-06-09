@@ -26,7 +26,7 @@ class RuntimeVisualisations extends StatelessWidget {
         tabs.add(
           TabData(
               text: "Graphen",
-              content: const LineDiagramVisualisation(),
+              content: LineDiagramVisualisation(),
               keepAlive: true,
               closable: false),
         );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pysort_flutter/model/data_set.dart';
 import 'package:pysort_flutter/providers/result_state.dart';
+import 'package:pysort_flutter/screens/widgets/runtime_visualisation/graph_colors.dart';
 
 class BarGraphVisualisation extends StatefulWidget {
   const BarGraphVisualisation({Key? key}) : super(key: key);
@@ -126,6 +127,7 @@ class _BarGraphVisualisationState extends State<BarGraphVisualisation> {
                     return RuntimeBar(
                       name: result.key,
                       runtime: runtime,
+                      barColor: graphColors[i],
                       maxRuntime: maxRuntime,
                     );
                   },
@@ -143,10 +145,12 @@ class RuntimeBar extends StatelessWidget {
   final Duration maxRuntime;
   final String name;
   final Duration runtime;
+  final Color barColor;
   const RuntimeBar({
     Key? key,
     required this.maxRuntime,
     required this.name,
+    required this.barColor,
     required this.runtime,
   }) : super(key: key);
 
@@ -174,7 +178,7 @@ class RuntimeBar extends StatelessWidget {
                       widthFactor: width,
                       child: Container(
                         height: 50,
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: barColor,
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                       ),
                     ),
@@ -188,18 +192,12 @@ class RuntimeBar extends StatelessWidget {
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6
-                                    ?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary)),
+                                    ?.copyWith(color: Colors.white)),
                             Text("$runtimeInMilliseconds ms",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6
-                                    ?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary)),
+                                    ?.copyWith(color: Colors.white)),
                           ],
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         ),
