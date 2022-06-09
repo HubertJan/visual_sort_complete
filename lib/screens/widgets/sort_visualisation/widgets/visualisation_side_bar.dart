@@ -28,7 +28,7 @@ class VisualisationSideBar extends StatelessWidget {
             )
           ],
         ),
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Stack(
           children: [
             if (state.dataSets.length != 1)
@@ -65,8 +65,8 @@ class VisualisationSideBar extends StatelessWidget {
                   ),
                   Container(
                       alignment: Alignment.centerLeft,
-                      child:
-                          Text("Geschwindigkeit", textAlign: TextAlign.start)),
+                      child: const Text("Geschwindigkeit",
+                          textAlign: TextAlign.start)),
                   Slider(
                     min: 0,
                     max: 60,

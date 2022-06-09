@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pysort_flutter/model/algorithm_examination_result.dart';
 import 'package:pysort_flutter/model/data_set.dart';
@@ -53,7 +52,6 @@ class ResultsState extends ChangeNotifier {
     }
     Duration dur = Duration.zero;
     for (final entry in _algorithnmNameToResults.entries) {
-      final algorithmName = entry.key;
       final result = entry.value;
       for (final set in result.runtimePerDataSet.entries.where(
         (entry) => validDataSets.any((element) => element.id == entry.key),

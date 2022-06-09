@@ -28,7 +28,6 @@ class SortVisualisations extends StatelessWidget {
                     VisualisationSideBar(),
                   ],
                 );
-                ;
               },
             ),
             keepAlive: true,

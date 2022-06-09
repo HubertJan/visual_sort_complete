@@ -13,7 +13,7 @@ class CustomWindowsBorder extends StatelessWidget {
         width: 1,
         child: Column(
           children: [
-            RightSide(),
+            const RightSide(),
             Expanded(
               child: child,
             )
@@ -23,6 +23,8 @@ class CustomWindowsBorder extends StatelessWidget {
 }
 
 class RightSide extends StatelessWidget {
+  const RightSide({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,7 +46,7 @@ class RightSide extends StatelessWidget {
                 ),
           ),
           Expanded(child: MoveWindow()),
-          WindowButtons()
+          const WindowButtons()
         ])),
       ]),
     );
@@ -65,6 +67,8 @@ final closeButtonColors = WindowButtonColors(
     iconMouseOver: Colors.white);
 
 class WindowButtons extends StatelessWidget {
+  const WindowButtons({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Row(
