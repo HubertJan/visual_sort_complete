@@ -122,6 +122,7 @@ class _BarGraphVisualisationState extends State<BarGraphVisualisation> {
               child: Center(
                 child: ListView.builder(
                   shrinkWrap: true,
+                  controller: ScrollController(),
                   itemCount: state.sortResults.length,
                   itemBuilder: (context, i) {
                     final result = state.sortResults.entries.toList()[i];

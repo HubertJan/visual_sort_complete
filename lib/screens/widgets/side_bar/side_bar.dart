@@ -68,6 +68,7 @@ class SideBar extends StatelessWidget {
               child: Consumer<SortConfig>(
                 builder: (ctx, state, _) {
                   return ListView.builder(
+                    controller: ScrollController(),
                     itemBuilder: (ctx, i) {
                       final algorithm = supportedAlgorithms[i];
                       final isSelected =
